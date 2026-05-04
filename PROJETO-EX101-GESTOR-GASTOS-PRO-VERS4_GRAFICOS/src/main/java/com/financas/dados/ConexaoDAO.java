@@ -8,8 +8,8 @@ public class ConexaoDAO {
 
     // Configurações do Banco de Dados
     private static final String URL = "jdbc:postgresql://localhost:5432/controle_gasto";
-    private static final String USUARIO = "postgres";
-    private static final String SENHA = "Rama2022@";
+    private static final String USUARIO = "usuario postgreSQL";
+    private static final String SENHA = "senha postgreSQL";
 
     /**
      * Estabelece uma conexão com o banco de dados PostgreSQL.
