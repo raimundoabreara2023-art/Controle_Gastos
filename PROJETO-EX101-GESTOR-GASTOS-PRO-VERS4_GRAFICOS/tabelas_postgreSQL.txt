@@ -1,0 +1,188 @@
+-- Table: public.categorias
+
+-- DROP TABLE IF EXISTS public.categorias;
+
+CREATE TABLE IF NOT EXISTS public.categorias
+(
+    id_categoria integer NOT NULL DEFAULT nextval('categorias_id_categoria_seq'::regclass),
+    nome character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT categorias_pkey PRIMARY KEY (id_categoria),
+    CONSTRAINT categorias_nome_key UNIQUE (nome)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.categorias
+    OWNER to postgres;
+
+==================================================================================================
+
+-- Table: public.subcategorias
+
+-- DROP TABLE IF EXISTS public.subcategorias;
+
+CREATE TABLE IF NOT EXISTS public.subcategorias
+(
+    id_subcategoria integer NOT NULL DEFAULT nextval('subcategorias_id_subcategoria_seq'::regclass),
+    id_categoria integer NOT NULL,
+    nome character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT subcategorias_pkey PRIMARY KEY (id_subcategoria),
+    CONSTRAINT subcategorias_nome_categoria_unique UNIQUE (id_categoria, nome),
+    CONSTRAINT subcategorias_id_categoria_fkey FOREIGN KEY (id_categoria)
+        REFERENCES public.categorias (id_categoria) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.subcategorias
+    OWNER to postgres;
+
+==================================================================================================
+
+-- Table: public.produtos
+
+-- DROP TABLE IF EXISTS public.produtos;
+
+CREATE TABLE IF NOT EXISTS public.produtos
+(
+    id_produto integer NOT NULL DEFAULT nextval('produtos_id_produto_seq'::regclass),
+    id_subcategoria integer NOT NULL,
+    nome character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    unidade_medida character varying(10) COLLATE pg_catalog."default",
+    CONSTRAINT produtos_pkey PRIMARY KEY (id_produto),
+    CONSTRAINT produtos_nome_sub_unique UNIQUE (id_subcategoria, nome),
+    CONSTRAINT produtos_id_subcategoria_fkey FOREIGN KEY (id_subcategoria)
+        REFERENCES public.subcategorias (id_subcategoria) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.produtos
+    OWNER to postgres;
+
+==================================================================================================
+
+-- Table: public.transacoes_detalhe
+
+-- DROP TABLE IF EXISTS public.transacoes_detalhe;
+
+CREATE TABLE IF NOT EXISTS public.transacoes_detalhe
+(
+    id_transacao integer NOT NULL DEFAULT nextval('transacoes_detalhe_id_transacao_seq'::regclass),
+    id_compra integer,
+    id_membro integer,
+    id_mes_ref integer,
+    valor_parcela numeric(10,2) NOT NULL,
+    numero_parcela integer NOT NULL,
+    descricao_formatada character varying(150) COLLATE pg_catalog."default",
+    id_produto integer,
+    quantidade numeric(10,3) NOT NULL DEFAULT 1,
+    valor_unitario numeric(10,2) NOT NULL DEFAULT 0.00,
+    CONSTRAINT transacoes_detalhe_pkey PRIMARY KEY (id_transacao),
+    CONSTRAINT transacoes_detalhe_id_compra_fkey FOREIGN KEY (id_compra)
+        REFERENCES public.compras_mestre (id_compra) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT transacoes_detalhe_id_membro_fkey FOREIGN KEY (id_membro)
+        REFERENCES public.membros (id_membro) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT transacoes_detalhe_id_mes_ref_fkey FOREIGN KEY (id_mes_ref)
+        REFERENCES public.meses_referencia (id_mes) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT transacoes_detalhe_id_produto_fkey FOREIGN KEY (id_produto)
+        REFERENCES public.produtos (id_produto) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.transacoes_detalhe
+    OWNER to postgres;
+=================================================================================
+
+-- Table: public.meses_referencia
+
+-- DROP TABLE IF EXISTS public.meses_referencia;
+
+CREATE TABLE IF NOT EXISTS public.meses_referencia
+(
+    id_mes integer NOT NULL DEFAULT nextval('meses_referencia_id_mes_seq'::regclass),
+    nome_exibicao character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    data_inicio date NOT NULL,
+    CONSTRAINT meses_referencia_pkey PRIMARY KEY (id_mes)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.meses_referencia
+    OWNER to postgres;
+
+======================================================================================
+
+-- Table: public.membros
+
+-- DROP TABLE IF EXISTS public.membros;
+
+CREATE TABLE IF NOT EXISTS public.membros
+(
+    id_membro integer NOT NULL DEFAULT nextval('membros_id_membro_seq'::regclass),
+    nome character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT membros_pkey PRIMARY KEY (id_membro)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.membros
+    OWNER to postgres;
+
+=====================================================================================
+
+-- Table: public.estabelecimentos
+
+-- DROP TABLE IF EXISTS public.estabelecimentos;
+
+CREATE TABLE IF NOT EXISTS public.estabelecimentos
+(
+    id_estabelecimento integer NOT NULL DEFAULT nextval('estabelecimentos_id_estabelecimento_seq'::regclass),
+    nome character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT estabelecimentos_pkey PRIMARY KEY (id_estabelecimento),
+    CONSTRAINT estabelecimentos_nome_key UNIQUE (nome)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.estabelecimentos
+    OWNER to postgres;
+
+====================================================================================
+
+-- Table: public.compras_mestre
+
+-- DROP TABLE IF EXISTS public.compras_mestre;
+
+CREATE TABLE IF NOT EXISTS public.compras_mestre
+(
+    id_compra integer NOT NULL DEFAULT nextval('compras_mestre_id_compra_seq'::regclass),
+    id_estabelecimento integer,
+    valor_total numeric(10,2) NOT NULL,
+    data_emissao date DEFAULT CURRENT_DATE,
+    qtd_parcelas integer DEFAULT 1,
+    forma_pagamento character varying(30) COLLATE pg_catalog."default",
+    CONSTRAINT compras_mestre_pkey PRIMARY KEY (id_compra),
+    CONSTRAINT compras_mestre_id_estabelecimento_fkey FOREIGN KEY (id_estabelecimento)
+        REFERENCES public.estabelecimentos (id_estabelecimento) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.compras_mestre
+    OWNER to postgres;

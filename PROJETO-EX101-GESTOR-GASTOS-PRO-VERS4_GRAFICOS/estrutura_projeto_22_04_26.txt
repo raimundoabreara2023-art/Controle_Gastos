@@ -1,0 +1,3238 @@
+=== VERSÃO ENXUTA (somente pastas e arquivos) ===
+
+[DIR] PROJETO-EX101-GESTOR-GASTOS-PRO-VERS4_GRAFICOS
+   estrutura_projeto.txt
+   pom.xml
+   [DIR] src
+      [DIR] main
+         [DIR] java
+            [DIR] com
+               [DIR] financas
+                  [DIR] dados
+                     CategoriaDAO.java
+                     CompraDAO.java
+                     ConexaoDAO.java
+                     EstabelecimentoDAO.java
+                     EstatisticasDAO.java
+                     MembroDAO.java
+                     ProdutoDAO.java
+                     SubcategoriaDAO.java
+                     TransacaoDetalheDAO.java
+                  [DIR] modelo
+                     CategoriaDTO.java
+                     CompraMestreDTO.java
+                     DashboardDTO.java
+                     EstabelecimentoDTO.java
+                     MembroDTO.java
+                     ProdutoDTO.java
+                     SubcategoriaDTO.java
+                     TransacaoDetalheDTO.java
+                  [DIR] servico
+                     CategoriaService.java
+                     CompraMestreService.java
+                     DashBoardService.java
+                     EstabelecimentoService.java
+                     MembroService.java
+                     ProdutoService.java
+                     SubcategoriaService.java
+                     TransacaoDetalheService.java
+                  [DIR] visao
+                     [DIR] graficos
+                        DashboardController.java
+                        GeradorGraficos.java
+                     MainApp.java
+                     MainController.java
+                     MainLayoutController.java
+            module-info.java
+         [DIR] resources
+            [DIR] com
+               [DIR] financas
+                  [DIR] estilo
+                     estilo-graficos.css
+                     estilo-moderno.css
+                  [DIR] visao
+                     [DIR] graficos
+                        DashboardView.fxml
+                     MainLayout.fxml
+                     MainView.fxml
+   tabelas_postgreSQL.txt
+
+=== VERSÃO DETALHADA (com código) ===
+
+[DIR] PROJETO-EX101-GESTOR-GASTOS-PRO-VERS4_GRAFICOS
+   estrutura_projeto.txt
+         === VERSÃO ENXUTA (somente pastas e arquivos) ===
+         
+         [DIR] PROJETO-EX101-GESTOR-GASTOS-PRO-VERS4_GRAFICOS
+            estrutura_projeto.txt
+            pom.xml
+            [DIR] src
+               [DIR] main
+                  [DIR] java
+                     [DIR] com
+                        [DIR] financas
+                           [DIR] dados
+                              CategoriaDAO.java
+                              CompraDAO.java
+                              ConexaoDAO.java
+                              EstabelecimentoDAO.java
+                              EstatisticasDAO.java
+                              MembroDAO.java
+                              ProdutoDAO.java
+                              SubcategoriaDAO.java
+                              TransacaoDetalheDAO.java
+                           [DIR] modelo
+                              CategoriaDTO.java
+                              CompraMestreDTO.java
+                              DashboardDTO.java
+                              EstabelecimentoDTO.java
+                              MembroDTO.java
+                              ProdutoDTO.java
+                              SubcategoriaDTO.java
+                              TransacaoDetalheDTO.java
+                           [DIR] servico
+                              CategoriaService.java
+                              CompraMestreService.java
+                              DashBoardService.java
+                              EstabelecimentoService.java
+                              MembroService.java
+                              ProdutoService.java
+                              SubcategoriaService.java
+                              TransacaoDetalheService.java
+                           [DIR] visao
+                              [DIR] graficos
+                                 DashboardController.java
+                                 GeradorGraficos.java
+                              MainApp.java
+                              MainController.java
+                              MainLayoutController.java
+                     module-info.java
+                  [DIR] resources
+                     [DIR] com
+                        [DIR] financas
+                           [DIR] estilo
+                              estilo-graficos.css
+                              estilo-moderno.css
+                           [DIR] visao
+                              [DIR] graficos
+                                 DashboardView.fxml
+              
+   pom.xml
+         <?xml version="1.0" encoding="UTF-8"?>
+         <project xmlns="http://maven.apache.org/POM/4.0.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+             <modelVersion>4.0.0</modelVersion>
+         
+             <groupId>com.financas</groupId>
+             <artifactId>PROJETO-EX101-GESTOR-GASTOS-PRO-VERS4_GRAFICOS</artifactId>
+             <version>1.0-SNAPSHOT</version>
+         
+             <properties>
+                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                 <maven.compiler.source>17</maven.compiler.source>
+                 <maven.compiler.target>17</maven.compiler.target>
+             </properties>
+         
+             <dependencies>
+                 <!-- JavaFX -->
+                 <dependency>
+                     <groupId>org.openjfx</groupId>
+                     <artifactId>javafx-controls</artifactId>
+                     <version>17.0.2</version>
+                 </dependency>
+                 <dependency>
+                     <groupId>org.openjfx</groupId>
+                     <artifactId>javafx-fxml</artifactId>
+                     <version>17.0.2</version>
+                 </dependency>
+         
+                 <!-- Driver PostgreSQL -->
+                 <dependency>
+                     <groupId>org.postgresql</groupId>
+                     <artifactId>postgresql</artifactId>
+                     <version>42.7.2</version>
+                 </dependency>
+             </dependencies>
+         
+             <build>
+                 <plugins>
+                     <plugin>
+                         <groupId>org.apache.maven.plugins</groupId>
+                         <artifactId>maven-compiler-plugin</artifactId>
+                         <version>3.8.1</version>
+                         <configuration>
+                             <release>17</release>
+                         </configuration>
+                     </plugin>
+                     <plugin>
+                         <groupId>org.openjfx</groupId>
+                         <artifactId>javafx-maven-plugin</artifactId>
+                         <version>0.0.8</version>
+                         <configuration>
+                             <mainClass>com.financas.visao.MainApp</mainClass>
+                         </configuration>
+                     </plugin>
+                 </plugins>
+             </build>
+         </project>
+   [DIR] src
+      [DIR] main
+         [DIR] java
+            [DIR] com
+               [DIR] financas
+                  [DIR] dados
+                     CategoriaDAO.java
+                           package com.financas.dados;
+                           
+                           import com.financas.modelo.CategoriaDTO;
+                           import java.sql.Connection;
+                           import java.sql.PreparedStatement;
+                           import java.sql.ResultSet;
+                           import java.sql.SQLException;
+                           import java.util.ArrayList;
+                           import java.util.List;
+                           
+                           public class CategoriaDAO {
+                           
+                               /**
+                                * Insere uma nova categoria no PostgreSQL.
+                                */
+                               public void salvar(CategoriaDTO categoria) throws SQLException {
+                                   String sql = "INSERT INTO categorias (nome) VALUES (?)";
+                                   
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                                       
+                                       stmt.setString(1, categoria.getNome());
+                                       stmt.executeUpdate();
+                                       
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao salvar no banco de dados: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Retorna a lista de todas as categorias ordenadas por nome.
+                                */
+                               public List<CategoriaDTO> listarTodas() throws SQLException {
+                                   List<CategoriaDTO> lista = new ArrayList<>();
+                                   String sql = "SELECT id_categoria, nome FROM categorias ORDER BY nome ASC";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql);
+                                        ResultSet rs = stmt.executeQuery()) {
+                           
+                                       while (rs.next()) {
+                                           CategoriaDTO dto = new CategoriaDTO();
+                                           dto.setIdCategoria(rs.getInt("id_categoria"));
+                                           dto.setNome(rs.getString("nome"));
+                                           lista.add(dto);
+                                       }
+                                       
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao listar categorias: " + e.getMessage());
+                                   }
+                                   return lista;
+                               }
+                           
+                               /**
+                                * Exclui uma categoria pelo ID.
+                                */
+                               public void excluir(int id) throws SQLException {
+                                   String sql = "DELETE FROM categorias WHERE id_categoria = ?";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                           
+                                       stmt.setInt(1, id);
+                                       stmt.executeUpdate();
+                                       
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao excluir do banco de dados: " + e.getMessage());
+                                   }
+                               }
+                           }
+                     CompraDAO.java
+                           package com.financas.dados;
+                           
+                           import com.financas.modelo.CompraMestreDTO;
+                           import com.financas.modelo.TransacaoDetalheDTO;
+                           import java.sql.Connection;
+                           import java.sql.PreparedStatement;
+                           import java.sql.ResultSet;
+                           import java.sql.SQLException;
+                           import java.sql.Statement;
+                           import java.util.ArrayList;
+                           import java.util.List;
+                           
+                           public class CompraDAO {
+                           
+                               /**
+                                * Salva a Compra Mestre e retorna o ID gerado automaticamente.
+                                * Ajustado para enviar o valor padrão 1 em qtd_parcelas.
+                                */
+                               public int salvar(CompraMestreDTO compra) throws SQLException {
+                                   String sql = "INSERT INTO public.compras_mestre (id_estabelecimento, valor_total, data_emissao, qtd_parcelas, forma_pagamento) " +
+                                                "VALUES (?, ?, ?, ?, ?)";
+                                   
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                                       
+                                       stmt.setInt(1, compra.getIdEstabelecimento());
+                                       stmt.setDouble(2, compra.getValorTotal());
+                                       
+                                       if (compra.getDataEmissao() != null) {
+                                           stmt.setDate(3, java.sql.Date.valueOf(compra.getDataEmissao()));
+                                       } else {
+                                           stmt.setDate(3, new java.sql.Date(System.currentTimeMillis()));
+                                       }
+                           
+                                       // Enviando valor padrão 1 para evitar erro de interface não implementada
+                                       stmt.setInt(4, 1); 
+                                       
+                                       stmt.setString(5, compra.getFormaPagamento());
+                                       
+                                       stmt.executeUpdate();
+                                       
+                                       try (ResultSet rs = stmt.getGeneratedKeys()) {
+                                           if (rs.next()) {
+                                               return rs.getInt(1);
+                                           }
+                                       }
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao salvar mestre no banco: " + e.getMessage());
+                                   }
+                                   return -1;
+                               }
+                           
+                               /**
+                                * Salva um item individual vinculado a uma compra.
+                                * Ajustado para usar 'valor_unitario' conforme a tabela do banco.
+                                */
+                               public void salvarItem(TransacaoDetalheDTO item) throws SQLException {
+                                   // SQL atualizado com todas as colunas obrigatórias da sua tabela
+                                   String sql = "INSERT INTO public.transacoes_detalhe " + 
+                                               "(id_compra, id_produto, id_membro, id_mes_ref, quantidade, valor_unitario, valor_parcela, numero_parcela) " +
+                                               "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                       PreparedStatement stmt = conn.prepareStatement(sql)) {
+                                       
+                                       stmt.setInt(1, item.getIdCompra());
+                                       stmt.setInt(2, item.getIdProduto());
+                                       stmt.setInt(3, item.getIdMembro());
+                                       
+                                       // Se o seu DTO ainda não tem idMesRef, você pode fixar um ID de teste 
+                                       // ou garantir que o DTO o carregue. Vou usar o do item por enquanto:
+                                       stmt.setInt(4, item.getIdMesRef()); 
+                                       
+                                       stmt.setDouble(5, item.getQuantidade());
+                                       stmt.setDouble(6, item.getValorUnitario());
+                                       
+                                       // Em compras à vista, o valor da parcela é o valor unitário * quantidade
+                                       stmt.setDouble(7, item.getValorUnitario() * item.getQuantidade());
+                                       stmt.setInt(8, 1); // Número da parcela (1 de 1)
+                                       
+                                       stmt.executeUpdate();
+                                   } catch (SQLException e) {
+                                       // Isso vai imprimir o erro real no console do VS Code
+                                       System.err.println("ERRO NO POSTGRES: " + e.getMessage());
+                                       throw new SQLException("Erro ao salvar item do detalhe: " + e.getMessage());
+                                   }
+                               }
+                           
+                               public List<CompraMestreDTO> listarTodas() throws SQLException {
+                                   List<CompraMestreDTO> lista = new ArrayList<>();
+                                   String sql = "SELECT * FROM public.compras_mestre ORDER BY data_emissao DESC";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql);
+                                        ResultSet rs = stmt.executeQuery()) {
+                           
+                                       while (rs.next()) {
+                                           CompraMestreDTO dto = new CompraMestreDTO();
+                                           dto.setIdCompra(rs.getInt("id_compra"));
+                                           dto.setIdEstabelecimento(rs.getInt("id_estabelecimento"));
+                                           dto.setValorTotal(rs.getDouble("valor_total"));
+                                           
+                                           java.sql.Date dbDate = rs.getDate("data_emissao");
+                                           if (dbDate != null) {
+                                               dto.setDataEmissao(dbDate.toLocalDate());
+                                           }
+                                           
+                                           dto.setQtdParcelas(rs.getInt("qtd_parcelas"));
+                                           dto.setFormaPagamento(rs.getString("forma_pagamento"));
+                                           lista.add(dto);
+                                       }
+                                   }
+                                   return lista;
+                               }
+                           
+                               public void excluir(int id) throws SQLException {
+                                   String sql = "DELETE FROM public.compras_mestre WHERE id_compra = ?";
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                                       stmt.setInt(1, id);
+                                       stmt.executeUpdate();
+                                   }
+                               }
+                           }
+                     ConexaoDAO.java
+                           package com.financas.dados;
+                           
+                           import java.sql.Connection;
+                           import java.sql.DriverManager;
+                           import java.sql.SQLException;
+                           
+                           public class ConexaoDAO {
+                           
+                               // Configurações do Banco de Dados
+                               private static final String URL = "jdbc:postgresql://localhost:5432/controle_gasto";
+                               private static final String USUARIO = "postgres";
+                               private static final String SENHA = "Rama2022@";
+                           
+                               /**
+                                * Estabelece uma conexão com o banco de dados PostgreSQL.
+                                * @return Connection objeto de conexão ativa.
+                                * @throws SQLException caso ocorra erro na conexão.
+                                */
+                               public static Connection conectar() throws SQLException {
+                                   try {
+                                       // No Java moderno o Driver é carregado automaticamente, 
+                                       // mas é boa prática garantir que a classe existe.
+                                       Class.forName("org.postgresql.Driver");
+                                       return DriverManager.getConnection(URL, USUARIO, SENHA);
+                                   } catch (ClassNotFoundException e) {
+                                       throw new SQLException("Driver do PostgreSQL não encontrado: " + e.getMessage());
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao conectar ao banco de dados: " + e.getMessage());
+                                   }
+                               }
+                           }
+                     EstabelecimentoDAO.java
+                           package com.financas.dados;
+                           
+                           import com.financas.modelo.EstabelecimentoDTO;
+                           import java.sql.Connection;
+                           import java.sql.PreparedStatement;
+                           import java.sql.ResultSet;
+                           import java.sql.SQLException;
+                           import java.util.ArrayList;
+                           import java.util.List;
+                           
+                           public class EstabelecimentoDAO {
+                           
+                               /**
+                                * Insere um novo estabelecimento no banco de dados.
+                                */
+                               public void salvar(EstabelecimentoDTO estabelecimento) throws SQLException {
+                                   String sql = "INSERT INTO estabelecimentos (nome) VALUES (?)";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                           
+                                       stmt.setString(1, estabelecimento.getNome());
+                                       stmt.executeUpdate();
+                           
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao salvar estabelecimento: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Retorna todos os estabelecimentos cadastrados, ordenados alfabeticamente.
+                                */
+                               public List<EstabelecimentoDTO> listarTodos() throws SQLException {
+                                   List<EstabelecimentoDTO> lista = new ArrayList<>();
+                                   String sql = "SELECT id_estabelecimento, nome FROM estabelecimentos ORDER BY nome ASC";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql);
+                                        ResultSet rs = stmt.executeQuery()) {
+                           
+                                       while (rs.next()) {
+                                           EstabelecimentoDTO dto = new EstabelecimentoDTO();
+                                           dto.setIdEstabelecimento(rs.getInt("id_estabelecimento"));
+                                           dto.setNome(rs.getString("nome"));
+                                           lista.add(dto);
+                                       }
+                           
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao listar estabelecimentos: " + e.getMessage());
+                                   }
+                                   return lista;
+                               }
+                           
+                               /**
+                                * Remove um estabelecimento pelo seu ID.
+                                */
+                               public void excluir(int id) throws SQLException {
+                                   String sql = "DELETE FROM estabelecimentos WHERE id_estabelecimento = ?";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                           
+                                       stmt.setInt(1, id);
+                                       stmt.executeUpdate();
+                           
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao eliminar estabelecimento: " + e.getMessage());
+                                   }
+                               }
+                           }
+                     EstatisticasDAO.java
+                           package com.financas.dados;
+                           
+                           import com.financas.modelo.DashboardDTO;
+                           import com.financas.modelo.TransacaoDetalheDTO;
+                           import java.sql.Connection;
+                           import java.sql.PreparedStatement;
+                           import java.sql.ResultSet;
+                           import java.util.ArrayList;
+                           import java.util.List;
+                           
+                           public class EstatisticasDAO {
+                               private Connection conexao;
+                           
+                               public EstatisticasDAO(Connection conexao) {
+                                   this.conexao = conexao;
+                               }
+                           
+                               // 1. Método original (Categorias)
+                               public List<DashboardDTO> buscarGastosPorCategoria() {
+                                   List<DashboardDTO> lista = new ArrayList<>();
+                                   String sql = "SELECT c.nome AS categoria, SUM(td.valor_parcela) AS total " +
+                                               "FROM transacoes_detalhe td " +
+                                               "JOIN produtos p ON td.id_produto = p.id_produto " +
+                                               "JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria " +
+                                               "JOIN categorias c ON s.id_categoria = c.id_categoria " +
+                                               "GROUP BY c.nome ORDER BY total DESC";
+                           
+                                   try (PreparedStatement stmt = conexao.prepareStatement(sql);
+                                        ResultSet rs = stmt.executeQuery()) {
+                                       while (rs.next()) {
+                                           lista.add(new DashboardDTO(rs.getString("categoria"), rs.getDouble("total")));
+                                       }
+                                   } catch (Exception e) { e.printStackTrace(); }
+                                   return lista;
+                               }
+                           
+                               // 2. NOVO: Buscar Gastos por Membro (Para o Gráfico de Barras)
+                               public List<DashboardDTO> buscarGastosPorMembro() {
+                                   List<DashboardDTO> lista = new ArrayList<>();
+                                   String sql = "SELECT m.nome AS membro, SUM(td.valor_parcela) AS total " +
+                                               "FROM transacoes_detalhe td " +
+                                               "JOIN membros m ON td.id_membro = m.id_membro " +
+                                               "GROUP BY m.nome ORDER BY total DESC";
+                           
+                                   try (PreparedStatement stmt = conexao.prepareStatement(sql);
+                                        ResultSet rs = stmt.executeQuery()) {
+                                       while (rs.next()) {
+                                           lista.add(new DashboardDTO(rs.getString("membro"), rs.getDouble("total")));
+                                       }
+                                   } catch (Exception e) { e.printStackTrace(); }
+                                   return lista;
+                               }
+                           
+                               // 3. NOVO: Buscar todos os itens (Para a Tabela de Histórico)
+                               public List<TransacaoDetalheDTO> buscarTodosItens() {
+                                   List<TransacaoDetalheDTO> lista = new ArrayList<>();
+                                   String sql = "SELECT p.nome AS produto, m.nome AS membro, td.quantidade, td.valor_parcela " +
+                                               "FROM transacoes_detalhe td " +
+                                               "JOIN produtos p ON td.id_produto = p.id_produto " +
+                                               "JOIN membros m ON td.id_membro = m.id_membro " +
+                                               "ORDER BY td.id_detalhe DESC"; // Mostra os últimos primeiro
+                           
+                                   try (PreparedStatement stmt = conexao.prepareStatement(sql);
+                                        ResultSet rs = stmt.executeQuery()) {
+                                       while (rs.next()) {
+                                           TransacaoDetalheDTO item = new TransacaoDetalheDTO();
+                                           item.setNomeProduto(rs.getString("produto"));
+                                           item.setNomeMembro(rs.getString("membro"));
+                                           item.setQuantidade(rs.getDouble("quantidade"));
+                                           item.setValorParcela(rs.getDouble("valor_parcela"));
+                                           lista.add(item);
+                                       }
+                                   } catch (Exception e) { e.printStackTrace(); }
+                                   return lista;
+                               }
+                           }
+                     MembroDAO.java
+                           package com.financas.dados;
+                           
+                           import com.financas.modelo.MembroDTO;
+                           import java.sql.Connection;
+                           import java.sql.PreparedStatement;
+                           import java.sql.ResultSet;
+                           import java.sql.SQLException;
+                           import java.util.ArrayList;
+                           import java.util.List;
+                           
+                           /**
+                            * DAO responsável pela comunicação com a tabela 'membros' no esquema 'public'.
+                            */
+                           public class MembroDAO {
+                           
+                               /**
+                                * Insere um novo membro da família.
+                                * Usa o caminho explícito 'public.membros' para evitar erros de visibilidade.
+                                */
+                               public void salvar(MembroDTO membro) throws SQLException {
+                                   String sql = "INSERT INTO public.membros (nome) VALUES (?)";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                           
+                                       stmt.setString(1, membro.getNome());
+                                       stmt.executeUpdate();
+                           
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao salvar membro no banco: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Lista todos os membros para preencher os ComboBoxes.
+                                * Ordenado por nome para facilitar a seleção na interface.
+                                */
+                               public List<MembroDTO> listarTodos() throws SQLException {
+                                   List<MembroDTO> lista = new ArrayList<>();
+                                   // Adicionado 'public.' antes do nome da tabela para garantir a conexão
+                                   String sql = "SELECT id_membro, nome FROM public.membros ORDER BY nome ASC";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql);
+                                        ResultSet rs = stmt.executeQuery()) {
+                           
+                                       while (rs.next()) {
+                                           MembroDTO dto = new MembroDTO();
+                                           // Verificado:setIdMembro (CamelCase) para alinhar com o DTO
+                                           dto.setIdMembro(rs.getInt("id_membro"));
+                                           dto.setNome(rs.getString("nome"));
+                                           lista.add(dto);
+                                       }
+                           
+                                   } catch (SQLException e) {
+                                       // Este erro será capturado pelo MembroService e exibido na MainView
+                                       throw new SQLException("Falha ao listar membros no banco de dados: " + e.getMessage());
+                                   }
+                                   return lista;
+                               }
+                           
+                               /**
+                                * Remove um membro pelo seu ID.
+                                */
+                               public void excluir(int id) throws SQLException {
+                                   String sql = "DELETE FROM public.membros WHERE id_membro = ?";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                           
+                                       stmt.setInt(1, id);
+                                       stmt.executeUpdate();
+                           
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Não foi possível excluir o membro. Verifique se ele possui gastos registrados.");
+                                   }
+                               }
+                           }
+                     ProdutoDAO.java
+                           package com.financas.dados;
+                           
+                           import com.financas.modelo.ProdutoDTO;
+                           import com.financas.modelo.SubcategoriaDTO;
+                           import com.financas.modelo.CategoriaDTO;
+                           import java.sql.Connection;
+                           import java.sql.PreparedStatement;
+                           import java.sql.ResultSet;
+                           import java.sql.SQLException;
+                           import java.util.ArrayList;
+                           import java.util.List;
+                           
+                           public class ProdutoDAO {
+                           
+                               public void salvar(ProdutoDTO produto) throws SQLException {
+                                   String sql = "INSERT INTO produtos (id_subcategoria, nome) VALUES (?, ?)";
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                                       stmt.setInt(1, produto.getIdSubcategoria());
+                                       stmt.setString(2, produto.getNome());
+                                       stmt.executeUpdate();
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao salvar produto: " + e.getMessage());
+                                   }
+                               }
+                           
+                               public List<ProdutoDTO> listarTodos() throws SQLException {
+                                   List<ProdutoDTO> lista = new ArrayList<>();
+                                   
+                                   // SQL com JOIN para trazer a árvore completa: Produto -> Subcategoria -> Categoria
+                                   String sql = "SELECT p.id_produto, p.nome AS nome_produto, " +
+                                                "s.id_subcategoria, s.nome AS nome_subcategoria, " +
+                                                "c.id_categoria, c.nome AS nome_categoria " +
+                                                "FROM produtos p " +
+                                                "INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria " +
+                                                "INNER JOIN categorias c ON s.id_categoria = c.id_categoria " +
+                                                "ORDER BY p.nome ASC";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql);
+                                        ResultSet rs = stmt.executeQuery()) {
+                           
+                                       while (rs.next()) {
+                                           // 1. Monta a Categoria
+                                           CategoriaDTO cat = new CategoriaDTO();
+                                           cat.setIdCategoria(rs.getInt("id_categoria"));
+                                           cat.setNome(rs.getString("nome_categoria"));
+                           
+                                           // 2. Monta a Subcategoria e vincula a Categoria
+                                           SubcategoriaDTO sub = new SubcategoriaDTO();
+                                           sub.setIdSubcategoria(rs.getInt("id_subcategoria"));
+                                           sub.setNome(rs.getString("nome_subcategoria"));
+                                           sub.setCategoria(cat); // Importante para o Controller!
+                           
+                                           // 3. Monta o Produto e vincula a Subcategoria
+                                           ProdutoDTO p = new ProdutoDTO();
+                                           p.setIdProduto(rs.getInt("id_produto"));
+                                           p.setNome(rs.getString("nome_produto"));
+                                           p.setIdSubcategoria(rs.getInt("id_subcategoria"));
+                                           p.setSubcategoria(sub); // Importante para o Controller!
+                           
+                                           lista.add(p);
+                                       }
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao listar produtos detalhados: " + e.getMessage());
+                                   }
+                                   return lista;
+                               }
+                           
+                               public void excluir(int id) throws SQLException {
+                                   String sql = "DELETE FROM produtos WHERE id_produto = ?";
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                                       stmt.setInt(1, id);
+                                       stmt.executeUpdate();
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao excluir produto: " + e.getMessage());
+                                   }
+                               }
+                           }
+                     SubcategoriaDAO.java
+                           package com.financas.dados;
+                           
+                           import com.financas.modelo.SubcategoriaDTO;
+                           import java.sql.Connection;
+                           import java.sql.PreparedStatement;
+                           import java.sql.ResultSet;
+                           import java.sql.SQLException;
+                           import java.util.ArrayList;
+                           import java.util.List;
+                           
+                           public class SubcategoriaDAO {
+                           
+                               /**
+                                * Insere uma nova subcategoria vinculada a uma categoria pai.
+                                */
+                               public void salvar(SubcategoriaDTO subcategoria) throws SQLException {
+                                   String sql = "INSERT INTO subcategorias (id_categoria, nome) VALUES (?, ?)";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                           
+                                       stmt.setInt(1, subcategoria.getIdCategoria());
+                                       stmt.setString(2, subcategoria.getNome());
+                                       stmt.executeUpdate();
+                           
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao salvar subcategoria no banco: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Lista todas as subcategorias de uma categoria específica.
+                                * Muito útil para atualizar ComboBoxes dependentes na interface.
+                                */
+                               public List<SubcategoriaDTO> listarPorCategoria(int idCategoria) throws SQLException {
+                                   List<SubcategoriaDTO> lista = new ArrayList<>();
+                                   String sql = "SELECT id_subcategoria, id_categoria, nome FROM subcategorias " +
+                                                "WHERE id_categoria = ? ORDER BY nome ASC";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                           
+                                       stmt.setInt(1, idCategoria);
+                                       try (ResultSet rs = stmt.executeQuery()) {
+                                           while (rs.next()) {
+                                               SubcategoriaDTO dto = new SubcategoriaDTO();
+                                               dto.setIdSubcategoria(rs.getInt("id_subcategoria"));
+                                               dto.setIdCategoria(rs.getInt("id_categoria"));
+                                               dto.setNome(rs.getString("nome"));
+                                               lista.add(dto);
+                                           }
+                                       }
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao filtrar subcategorias: " + e.getMessage());
+                                   }
+                                   return lista;
+                               }
+                           
+                               /**
+                                * Retorna a lista completa de subcategorias.
+                                */
+                               public List<SubcategoriaDTO> listarTodas() throws SQLException {
+                                   List<SubcategoriaDTO> lista = new ArrayList<>();
+                                   String sql = "SELECT id_subcategoria, id_categoria, nome FROM subcategorias ORDER BY nome ASC";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql);
+                                        ResultSet rs = stmt.executeQuery()) {
+                           
+                                       while (rs.next()) {
+                                           SubcategoriaDTO dto = new SubcategoriaDTO();
+                                           dto.setIdSubcategoria(rs.getInt("id_subcategoria"));
+                                           dto.setIdCategoria(rs.getInt("id_categoria"));
+                                           dto.setNome(rs.getString("nome"));
+                                           lista.add(dto);
+                                       }
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao listar todas as subcategorias: " + e.getMessage());
+                                   }
+                                   return lista;
+                               }
+                           
+                               /**
+                                * Remove uma subcategoria pelo ID.
+                                */
+                               public void excluir(int id) throws SQLException {
+                                   String sql = "DELETE FROM subcategorias WHERE id_subcategoria = ?";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                           
+                                       stmt.setInt(1, id);
+                                       stmt.executeUpdate();
+                           
+                                   } catch (SQLException e) {
+                                       throw new SQLException("Erro ao excluir subcategoria: " + e.getMessage());
+                                   }
+                               }
+                           }
+                     TransacaoDetalheDAO.java
+                           package com.financas.dados;
+                           
+                           import com.financas.modelo.TransacaoDetalheDTO;
+                           import java.sql.Connection;
+                           import java.sql.PreparedStatement;
+                           import java.sql.ResultSet;
+                           import java.sql.SQLException;
+                           import java.util.ArrayList;
+                           import java.util.List;
+                           
+                           /**
+                            * DAO atualizado para incluir colunas de parcelamento padrão.
+                            */
+                           public class TransacaoDetalheDAO {
+                           
+                               public void salvar(TransacaoDetalheDTO dto) throws SQLException {
+                                   // SQL atualizado com as colunas valor_parcela e numero_parcela
+                                   String sql = "INSERT INTO public.transacoes_detalhe (id_compra, id_produto, id_membro, quantidade, valor_unitario, valor_parcela, numero_parcela) "
+                                              + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                           
+                                       stmt.setInt(1, dto.getIdCompra());
+                                       stmt.setInt(2, dto.getIdProduto());
+                                       stmt.setInt(3, dto.getIdMembro());
+                                       stmt.setDouble(4, dto.getQuantidade());
+                                       stmt.setDouble(5, dto.getValorUnitario());
+                                       
+                                       // Novos parâmetros enviados para o banco
+                                       stmt.setDouble(6, dto.getValorParcela());
+                                       stmt.setInt(7, dto.getNumeroParcela());
+                           
+                                       stmt.executeUpdate();
+                                   }
+                               }
+                           
+                               public List<TransacaoDetalheDTO> listarPorCompra(int idCompra) throws SQLException {
+                                   List<TransacaoDetalheDTO> lista = new ArrayList<>();
+                                   // SELECT também precisa trazer os novos campos para o DTO ficar completo
+                                   String sql = "SELECT id_transacao, id_compra, id_produto, id_membro, quantidade, valor_unitario, valor_parcela, numero_parcela "
+                                              + "FROM public.transacoes_detalhe WHERE id_compra = ?";
+                           
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                                       
+                                       stmt.setInt(1, idCompra);
+                                       
+                                       try (ResultSet rs = stmt.executeQuery()) {
+                                           while (rs.next()) {
+                                               TransacaoDetalheDTO dto = new TransacaoDetalheDTO();
+                                               dto.setIdDetalhe(rs.getInt("id_transacao"));
+                                               dto.setIdCompra(rs.getInt("id_compra"));
+                                               dto.setIdProduto(rs.getInt("id_produto"));
+                                               dto.setIdMembro(rs.getInt("id_membro"));
+                                               dto.setQuantidade(rs.getDouble("quantidade"));
+                                               dto.setValorUnitario(rs.getDouble("valor_unitario"));
+                                               
+                                               // Recuperando os novos campos do banco
+                                               dto.setValorParcela(rs.getDouble("valor_parcela"));
+                                               dto.setNumeroParcela(rs.getInt("numero_parcela"));
+                                               
+                                               lista.add(dto);
+                                           }
+                                       }
+                                   }
+                                   return lista;
+                               }
+                           
+                               public void excluirPorCompra(int idCompra) throws SQLException {
+                                   String sql = "DELETE FROM public.transacoes_detalhe WHERE id_compra = ?";
+                                   try (Connection conn = ConexaoDAO.conectar();
+                                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+                                       stmt.setInt(1, idCompra);
+                                       stmt.executeUpdate();
+                                   }
+                               }
+                           }
+                  [DIR] modelo
+                     CategoriaDTO.java
+                           package com.financas.modelo;
+                           
+                           import java.io.Serializable;
+                           
+                           /**
+                            * DTO para representar a categoria principal de gastos.
+                            * Segue o padrão JavaBean para transporte de dados entre camadas.
+                            */
+                           public class CategoriaDTO implements Serializable {
+                               
+                               private static final long serialVersionUID = 1L;
+                           
+                               private int idCategoria;
+                               private String nome;
+                           
+                               // Construtor padrão necessário para frameworks e instanciacão manual
+                               public CategoriaDTO() {
+                               }
+                           
+                               // Construtor de conveniência
+                               public CategoriaDTO(int idCategoria, String nome) {
+                                   this.idCategoria = idCategoria;
+                                   this.nome = nome;
+                               }
+                           
+                               public int getIdCategoria() {
+                                   return idCategoria;
+                               }
+                           
+                               public void setIdCategoria(int idCategoria) {
+                                   this.idCategoria = idCategoria;
+                               }
+                           
+                               public String getNome() {
+                                   return nome;
+                               }
+                           
+                               public void setNome(String nome) {
+                                   this.nome = nome;
+                               }
+                           
+                               // Sobrescrita do toString para facilitar o debug e exibição em ComboBoxes, se necessário
+                               @Override
+                               public String toString() {
+                                   return this.nome;
+                               }
+                           }
+                     CompraMestreDTO.java
+                           package com.financas.modelo;
+                           
+                           import java.io.Serializable;
+                           import java.time.LocalDate;
+                           
+                           /**
+                            * DTO que representa a tabela compras_mestre.
+                            * Transporta os dados principais do cabeçalho da compra.
+                            */
+                           public class CompraMestreDTO implements Serializable {
+                           
+                               private static final long serialVersionUID = 1L;
+                           
+                               private int idCompra;
+                               private int idEstabelecimento;
+                               private double valorTotal;
+                               private LocalDate dataEmissao;
+                               private int qtdParcelas;
+                               private String formaPagamento;
+                           
+                               public CompraMestreDTO() {
+                               }
+                           
+                               public CompraMestreDTO(int idCompra, int idEstabelecimento, double valorTotal, 
+                                                      LocalDate dataEmissao, int qtdParcelas, String formaPagamento) {
+                                   this.idCompra = idCompra;
+                                   this.idEstabelecimento = idEstabelecimento;
+                                   this.valorTotal = valorTotal;
+                                   this.dataEmissao = dataEmissao;
+                                   this.qtdParcelas = qtdParcelas;
+                                   this.formaPagamento = formaPagamento;
+                               }
+                           
+                               public int getIdCompra() {
+                                   return idCompra;
+                               }
+                           
+                               public void setIdCompra(int idCompra) {
+                                   this.idCompra = idCompra;
+                               }
+                           
+                               public int getIdEstabelecimento() {
+                                   return idEstabelecimento;
+                               }
+                           
+                               public void setIdEstabelecimento(int idEstabelecimento) {
+                                   this.idEstabelecimento = idEstabelecimento;
+                               }
+                           
+                               public double getValorTotal() {
+                                   return valorTotal;
+                               }
+                           
+                               public void setValorTotal(double valorTotal) {
+                                   this.valorTotal = valorTotal;
+                               }
+                           
+                               public LocalDate getDataEmissao() {
+                                   return dataEmissao;
+                               }
+                           
+                               public void setDataEmissao(LocalDate dataEmissao) {
+                                   this.dataEmissao = dataEmissao;
+                               }
+                           
+                               public int getQtdParcelas() {
+                                   return qtdParcelas;
+                               }
+                           
+                               public void setQtdParcelas(int qtdParcelas) {
+                                   this.qtdParcelas = qtdParcelas;
+                               }
+                           
+                               public String getFormaPagamento() {
+                                   return formaPagamento;
+                               }
+                           
+                               public void setFormaPagamento(String formaPagamento) {
+                                   this.formaPagamento = formaPagamento;
+                               }
+                           
+                               @Override
+                               public String toString() {
+                                   return "Compra #" + idCompra + " - Total: " + valorTotal;
+                               }
+                           }
+                     DashboardDTO.java
+                           package com.financas.modelo;
+                           
+                           /**
+                            * DTO para transportar os totais agrupados para os gráficos.
+                            */
+                           public class DashboardDTO {
+                               private String nome;
+                               private Double valor;
+                           
+                               public DashboardDTO(String nome, Double valor) {
+                                   this.nome = nome;
+                                   this.valor = valor;
+                               }
+                           
+                               // Getters e Setters
+                               public String getNome() { return nome; }
+                               public void setNome(String nome) { this.nome = nome; }
+                           
+                               public Double getValor() { return valor; }
+                               public void setValor(Double valor) { this.valor = valor; }
+                           }
+                     EstabelecimentoDTO.java
+                           package com.financas.modelo;
+                           
+                           import java.io.Serializable;
+                           
+                           /**
+                            * DTO que representa a tabela estabelecimentos.
+                            * Utilizado para transportar o nome do local onde a compra foi realizada.
+                            */
+                           public class EstabelecimentoDTO implements Serializable {
+                           
+                               private static final long serialVersionUID = 1L;
+                           
+                               private int idEstabelecimento;
+                               private String nome;
+                           
+                               public EstabelecimentoDTO() {
+                               }
+                           
+                               public EstabelecimentoDTO(int idEstabelecimento, String nome) {
+                                   this.idEstabelecimento = idEstabelecimento;
+                                   this.nome = nome;
+                               }
+                           
+                               public int getIdEstabelecimento() {
+                                   return idEstabelecimento;
+                               }
+                           
+                               public void setIdEstabelecimento(int idEstabelecimento) {
+                                   this.idEstabelecimento = idEstabelecimento;
+                               }
+                           
+                               public String getNome() {
+                                   return nome;
+                               }
+                           
+                               public void setNome(String nome) {
+                                   this.nome = nome;
+                               }
+                           
+                               /**
+                                * Sobrescrita estratégica para o JavaFX.
+                                * Quando este DTO for usado em um ComboBox, o componente exibirá 
+                                * automaticamente o nome do estabelecimento.
+                                */
+                               @Override
+                               public String toString() {
+                                   return nome != null ? nome : "";
+                               }
+                           }
+                     MembroDTO.java
+                           package com.financas.modelo;
+                           
+                           import java.io.Serializable;
+                           
+                           /**
+                            * DTO que representa a tabela membros.
+                            * Transporta os dados das pessoas vinculadas ao núcleo familiar.
+                            */
+                           public class MembroDTO implements Serializable {
+                           
+                               private static final long serialVersionUID = 1L;
+                           
+                               private int idMembro;
+                               private String nome;
+                           
+                               public MembroDTO() {
+                               }
+                           
+                               public MembroDTO(int idMembro, String nome) {
+                                   this.idMembro = idMembro;
+                                   this.nome = nome;
+                               }
+                           
+                               public int getIdMembro() {
+                                   return idMembro;
+                               }
+                           
+                               public void setIdMembro(int idMembro) {
+                                   this.idMembro = idMembro;
+                               }
+                           
+                               public String getNome() {
+                                   return nome;
+                               }
+                           
+                               public void setNome(String nome) {
+                                   this.nome = nome;
+                               }
+                           
+                               /**
+                                * Facilita a exibição em ComboBoxes e ListViewers no JavaFX.
+                                */
+                               @Override
+                               public String toString() {
+                                   return nome != null ? nome : "";
+                               }
+                           }
+                     ProdutoDTO.java
+                           package com.financas.modelo;
+                           
+                           import java.io.Serializable;
+                           
+                           /**
+                            * DTO que representa a tabela produtos.
+                            */
+                           public class ProdutoDTO implements Serializable {
+                           
+                               private static final long serialVersionUID = 1L;
+                           
+                               private int idProduto;
+                               private int idSubcategoria;
+                               private String nome;
+                               
+                               // --- ADICIONE ESTE ATRIBUTO ---
+                               private SubcategoriaDTO subcategoria; 
+                           
+                               public ProdutoDTO() {
+                               }
+                           
+                               public ProdutoDTO(int idProduto, int idSubcategoria, String nome) {
+                                   this.idProduto = idProduto;
+                                   this.idSubcategoria = idSubcategoria;
+                                   this.nome = nome;
+                               }
+                           
+                               // --- ADICIONE ESTES MÉTODOS GETTER E SETTER ---
+                               public SubcategoriaDTO getSubcategoria() {
+                                   return subcategoria;
+                               }
+                           
+                               public void setSubcategoria(SubcategoriaDTO subcategoria) {
+                                   this.subcategoria = subcategoria;
+                               }
+                           
+                               // --- MANTENHA OS OUTROS MÉTODOS ORIGINAIS ---
+                               public int getIdProduto() {
+                                   return idProduto;
+                               }
+                           
+                               public void setIdProduto(int idProduto) {
+                                   this.idProduto = idProduto;
+                               }
+                           
+                               public int getIdSubcategoria() {
+                                   return idSubcategoria;
+                               }
+                           
+                               public void setIdSubcategoria(int idSubcategoria) {
+                                   this.idSubcategoria = idSubcategoria;
+                               }
+                           
+                               public String getNome() {
+                                   return nome;
+                               }
+                           
+                               public void setNome(String nome) {
+                                   this.nome = nome;
+                               }
+                           
+                               @Override
+                               public String toString() {
+                                   return nome != null ? nome : "";
+                               }
+                           }
+                     SubcategoriaDTO.java
+                           package com.financas.modelo;
+                           
+                           import java.io.Serializable;
+                           
+                           /**
+                            * DTO que representa a tabela subcategorias.
+                            */
+                           public class SubcategoriaDTO implements Serializable {
+                           
+                               private static final long serialVersionUID = 1L;
+                           
+                               private int idSubcategoria;
+                               private int idCategoria;
+                               private String nome;
+                               
+                               // --- ADICIONE ESTE ATRIBUTO PARA COMPLETAR O VÍNCULO ---
+                               private CategoriaDTO categoria;
+                           
+                               public SubcategoriaDTO() {
+                               }
+                           
+                               public SubcategoriaDTO(int idSubcategoria, int idCategoria, String nome) {
+                                   this.idSubcategoria = idSubcategoria;
+                                   this.idCategoria = idCategoria;
+                                   this.nome = nome;
+                               }
+                           
+                               // --- ADICIONE OS MÉTODOS GETTER E SETTER PARA A CATEGORIA ---
+                               public CategoriaDTO getCategoria() {
+                                   return categoria;
+                               }
+                           
+                               public void setCategoria(CategoriaDTO categoria) {
+                                   this.categoria = categoria;
+                               }
+                           
+                               // --- MANTENHA OS MÉTODOS ORIGINAIS ABAIXO ---
+                               public int getIdSubcategoria() {
+                                   return idSubcategoria;
+                               }
+                           
+                               public void setIdSubcategoria(int idSubcategoria) {
+                                   this.idSubcategoria = idSubcategoria;
+                               }
+                           
+                               public int getIdCategoria() {
+                                   return idCategoria;
+                               }
+                           
+                               public void setIdCategoria(int idCategoria) {
+                                   this.idCategoria = idCategoria;
+                               }
+                           
+                               public String getNome() {
+                                   return nome;
+                               }
+                           
+                               public void setNome(String nome) {
+                                   this.nome = nome;
+                               }
+                           
+                               @Override
+                               public String toString() {
+                                   return nome != null ? nome : "";
+                               }
+                           }
+                     TransacaoDetalheDTO.java
+                           package com.financas.modelo;
+                           
+                           import java.io.Serializable;
+                           
+                           /**
+                            * DTO que representa a tabela transacoes_detalhe.
+                            * Transporta os dados de cada item individual dentro de uma compra mestre.
+                            */
+                           public class TransacaoDetalheDTO implements Serializable {
+                           
+                               private static final long serialVersionUID = 1L;
+                           
+                               private int idDetalhe;
+                               private int idCompra;
+                               private int idProduto;
+                               private int idMembro;
+                               private int idMesRef; // Campo obrigatório para o banco de dados
+                               private double quantidade;
+                               private double valor_unitario;
+                               
+                               // Suporte para parcelamento padrão
+                               private double valor_parcela;
+                               private int numero_parcela;
+                           
+                               // Campos para exibição na interface JavaFX (Joins de consulta)
+                               private String nomeProduto;
+                               private String nomeMembro;
+                               private String nomeCategoria;    
+                               private String nomeSubcategoria; 
+                           
+                               public TransacaoDetalheDTO() {
+                               }
+                           
+                               public TransacaoDetalheDTO(int idDetalhe, int idCompra, int idProduto, 
+                                                           int idMembro, int idMesRef, double quantidade, double valorUnitario) {
+                                   this.idDetalhe = idDetalhe;
+                                   this.idCompra = idCompra;
+                                   this.idProduto = idProduto;
+                                   this.idMembro = idMembro;
+                                   this.idMesRef = idMesRef;
+                                   this.quantidade = quantidade;
+                                   this.valor_unitario = valorUnitario;
+                               }
+                           
+                               // --- GETTERS E SETTERS ---
+                           
+                               public int getIdDetalhe() { return idDetalhe; }
+                               public void setIdDetalhe(int idDetalhe) { this.idDetalhe = idDetalhe; }
+                           
+                               public int getIdCompra() { return idCompra; }
+                               public void setIdCompra(int idCompra) { this.idCompra = idCompra; }
+                           
+                               public int getIdProduto() { return idProduto; }
+                               public void setIdProduto(int idProduto) { this.idProduto = idProduto; }
+                           
+                               public int getIdMembro() { return idMembro; }
+                               public void setIdMembro(int idMembro) { this.idMembro = idMembro; }
+                           
+                               public int getIdMesRef() { return idMesRef; }
+                               public void setIdMesRef(int idMesRef) { this.idMesRef = idMesRef; }
+                           
+                               public double getQuantidade() { return quantidade; }
+                               public void setQuantidade(double quantidade) { this.quantidade = quantidade; }
+                           
+                               public double getValorUnitario() { return valor_unitario; }
+                               public void setValorUnitario(double valorUnitario) { this.valor_unitario = valorUnitario; }
+                           
+                               public double getValorParcela() { return valor_parcela; }
+                               public void setValorParcela(double valorParcela) { this.valor_parcela = valorParcela; }
+                           
+                               public int getNumeroParcela() { return numero_parcela; }
+                               public void setNumeroParcela(int numeroParcela) { this.numero_parcela = numeroParcela; }
+                           
+                               // --- CAMPOS DE EXIBIÇÃO ---
+                           
+                               public String getNomeProduto() { return nomeProduto; }
+                               public void setNomeProduto(String nomeProduto) { this.nomeProduto = nomeProduto; }
+                           
+                               public String getNomeMembro() { return nomeMembro; }
+                               public void setNomeMembro(String nomeMembro) { this.nomeMembro = nomeMembro; }
+                           
+                               public String getNomeCategoria() { return nomeCategoria; }
+                               public void setNomeCategoria(String nomeCategoria) { this.nomeCategoria = nomeCategoria; }
+                           
+                               public String getNomeSubcategoria() { return nomeSubcategoria; }
+                               public void setNomeSubcategoria(String nomeSubcategoria) { this.nomeSubcategoria = nomeSubcategoria; }
+                           
+                               /**
+                                * Cálculo rápido de subtotal
+                                */
+                               public double getSubtotal() {
+                                   return this.quantidade * this.valor_unitario;
+                               }
+                           
+                               @Override
+                               public String toString() {
+                                   return (nomeProduto != null ? nomeProduto : "Item #" + idProduto) + " - Qtd: " + quantidade;
+                               }
+                           }
+                  [DIR] servico
+                     CategoriaService.java
+                           package com.financas.servico;
+                           
+                           import com.financas.dados.CategoriaDAO;
+                           import com.financas.modelo.CategoriaDTO;
+                           import java.util.List;
+                           
+                           public class CategoriaService {
+                           
+                               private CategoriaDAO categoriaDAO;
+                           
+                               public CategoriaService() {
+                                   // Inicializa o DAO para comunicação com o banco
+                                   this.categoriaDAO = new CategoriaDAO();
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Salvar Categoria
+                                * Valida se o nome não é nulo ou vazio antes de enviar ao DAO.
+                                */
+                               public void salvar(CategoriaDTO categoria) throws Exception {
+                                   if (categoria.getNome() == null || categoria.getNome().trim().isEmpty()) {
+                                       throw new Exception("O nome da categoria é obrigatório.");
+                                   }
+                           
+                                   // Você pode adicionar outras regras, como converter para MAIÚSCULO
+                                   categoria.setNome(categoria.getNome().toUpperCase().trim());
+                           
+                                   try {
+                                       categoriaDAO.salvar(categoria);
+                                   } catch (Exception e) {
+                                       // Aqui você trata erros de banco, como nomes duplicados (Unique Constraint)
+                                       if (e.getMessage().contains("duplicate key")) {
+                                           throw new Exception("Esta categoria já está cadastrada.");
+                                       }
+                                       throw new Exception("Erro ao salvar categoria: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Listar Categorias
+                                * Retorna todas as categorias cadastradas.
+                                */
+                               public List<CategoriaDTO> listarTodos() throws Exception {
+                                   try {
+                                       return categoriaDAO.listarTodas();
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao listar categorias: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Exclusão
+                                * Verifica se a categoria pode ser excluída.
+                                */
+                               public void excluir(int id) throws Exception {
+                                   if (id <= 0) {
+                                       throw new Exception("ID inválido para exclusão.");
+                                   }
+                                   
+                                   try {
+                                       categoriaDAO.excluir(id);
+                                   } catch (Exception e) {
+                                       // O banco de dados vai impedir a exclusão se houver subcategorias vinculadas
+                                       // devido à integridade referencial (Foreign Key).
+                                       throw new Exception("Não é possível excluir: existem subcategorias ou produtos vinculados.");
+                                   }
+                               }
+                           }
+                     CompraMestreService.java
+                           package com.financas.servico;
+                           
+                           import com.financas.dados.CompraDAO;
+                           import com.financas.modelo.CompraMestreDTO;
+                           import com.financas.modelo.TransacaoDetalheDTO;
+                           import java.util.List;
+                           
+                           public class CompraMestreService {
+                           
+                               private CompraDAO compraDAO;
+                               private TransacaoDetalheService detalheService;
+                           
+                               public CompraMestreService() {
+                                   this.compraDAO = new CompraDAO();
+                                   this.detalheService = new TransacaoDetalheService();
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Salvar Compra Completa
+                                * Vincula os itens à compra mestre e define valores padrão para parcelamento.
+                                */
+                               public void salvarCompraCompleta(CompraMestreDTO compra, List<TransacaoDetalheDTO> itens) throws Exception {
+                                   // 1. Validações básicas da compra
+                                   if (compra.getValorTotal() <= 0) {
+                                       throw new Exception("O valor total da compra deve ser maior que zero.");
+                                   }
+                                   if (itens == null || itens.isEmpty()) {
+                                       throw new Exception("Uma compra não pode ser salva sem itens.");
+                                   }
+                                   if (compra.getIdEstabelecimento() <= 0) {
+                                       throw new Exception("É necessário selecionar um estabelecimento.");
+                                   }
+                           
+                                   try {
+                                       // 2. Salva a Compra Mestre e recupera o ID gerado pelo PostgreSQL
+                                       int idCompraGerado = compraDAO.salvar(compra);
+                                       
+                                       // 3. Percorre os itens para vincular e definir valores de parcela
+                                       for (TransacaoDetalheDTO item : itens) {
+                                           item.setIdCompra(idCompraGerado);
+                                           
+                                           /* * AJUSTE TEMPORÁRIO (Parcelamento):
+                                            * Como não implementamos a interface de parcelas, definimos 
+                                            * que o valor da parcela é o valor total da nota e o número é 1.
+                                            */
+                                           item.setValorParcela(compra.getValorTotal());
+                                           item.setNumeroParcela(1);
+                                           
+                                           detalheService.salvar(item);
+                                       }
+                                       
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao processar a compra: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Lista o histórico de compras
+                                */
+                               public List<CompraMestreDTO> listarHistorico() throws Exception {
+                                   try {
+                                       return compraDAO.listarTodas();
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao obter histórico de compras: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Exclusão de Compra
+                                */
+                               public void excluirCompra(int idCompra) throws Exception {
+                                   if (idCompra <= 0) {
+                                       throw new Exception("ID de compra inválido.");
+                                   }
+                                   try {
+                                       compraDAO.excluir(idCompra);
+                                   } catch (Exception e) {
+                                       throw new Exception("Falha ao eliminar a compra: " + e.getMessage());
+                                   }
+                               }
+                           }
+                     DashBoardService.java
+                           package com.financas.servico;
+                           
+                           import com.financas.dados.EstatisticasDAO;
+                           import com.financas.modelo.DashboardDTO;
+                           import com.financas.modelo.TransacaoDetalheDTO;
+                           import java.sql.Connection;
+                           import java.util.List;
+                           
+                           public class DashBoardService {
+                               
+                               private EstatisticasDAO estatisticasDAO;
+                           
+                               public DashBoardService(Connection conexao) {
+                                   this.estatisticasDAO = new EstatisticasDAO(conexao);
+                               }
+                           
+                               /**
+                                * Retorna a lista de gastos por categoria para o gráfico de pizza.
+                                */
+                               public List<DashboardDTO> carregarDadosPizza() {
+                                   return estatisticasDAO.buscarGastosPorCategoria();
+                               }
+                           
+                               /**
+                                * NOVO: Retorna a lista de gastos por membro para o gráfico de barras.
+                                */
+                               public List<DashboardDTO> carregarDadosMembros() {
+                                   return estatisticasDAO.buscarGastosPorMembro();
+                               }
+                           
+                               /**
+                                * NOVO: Retorna todos os itens salvos para preencher a TableView de histórico.
+                                */
+                               public List<TransacaoDetalheDTO> carregarHistoricoItens() {
+                                   return estatisticasDAO.buscarTodosItens();
+                               }
+                           
+                               /**
+                                * Calcula o total geral dos dados carregados.
+                                */
+                               public double calcularTotalGeral(List<DashboardDTO> dados) {
+                                   return dados.stream()
+                                               .mapToDouble(DashboardDTO::getValor)
+                                               .sum();
+                               }
+                           }
+                     EstabelecimentoService.java
+                           package com.financas.servico;
+                           
+                           import com.financas.dados.EstabelecimentoDAO;
+                           import com.financas.modelo.EstabelecimentoDTO;
+                           import java.util.List;
+                           
+                           public class EstabelecimentoService {
+                           
+                               private EstabelecimentoDAO estabelecimentoDAO;
+                           
+                               public EstabelecimentoService() {
+                                   this.estabelecimentoDAO = new EstabelecimentoDAO();
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Salvar Estabelecimento
+                                * Garante a padronização do nome e evita valores nulos.
+                                */
+                               public void salvar(EstabelecimentoDTO estabelecimento) throws Exception {
+                                   if (estabelecimento.getNome() == null || estabelecimento.getNome().trim().isEmpty()) {
+                                       throw new Exception("O nome do estabelecimento não pode estar vazio.");
+                                   }
+                           
+                                   // Padronização: Remove espaços extras e coloca em Maiúsculas
+                                   estabelecimento.setNome(estabelecimento.getNome().trim().toUpperCase());
+                           
+                                   try {
+                                       estabelecimentoDAO.salvar(estabelecimento);
+                                   } catch (Exception e) {
+                                       // Tratamento para o UNIQUE CONSTRAINT que definimos no PostgreSQL
+                                       if (e.getMessage().contains("unique") || e.getMessage().contains("duplicate")) {
+                                           throw new Exception("Este estabelecimento já está cadastrado.");
+                                       }
+                                       throw new Exception("Erro ao salvar estabelecimento: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Retorna a lista de todos os estabelecimentos cadastrados.
+                                */
+                               public List<EstabelecimentoDTO> listarTodos() throws Exception {
+                                   try {
+                                       return estabelecimentoDAO.listarTodos();
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao carregar estabelecimentos: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Exclusão
+                                * O banco impedirá se houver compras vinculadas (Integridade Referencial).
+                                */
+                               public void excluir(int id) throws Exception {
+                                   if (id <= 0) {
+                                       throw new Exception("ID de estabelecimento inválido.");
+                                   }
+                                   try {
+                                       estabelecimentoDAO.excluir(id);
+                                   } catch (Exception e) {
+                                       throw new Exception("Não é possível remover: existem compras registadas para este local.");
+                                   }
+                               }
+                           }
+                     MembroService.java
+                           package com.financas.servico;
+                           
+                           import com.financas.dados.MembroDAO;
+                           import com.financas.modelo.MembroDTO;
+                           import java.util.List;
+                           
+                           public class MembroService {
+                           
+                               private MembroDAO membroDAO;
+                           
+                               public MembroService() {
+                                   this.membroDAO = new MembroDAO();
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Salvar Membro
+                                * Garante que o nome seja válido e padronizado.
+                                */
+                               public void salvar(MembroDTO membro) throws Exception {
+                                   if (membro.getNome() == null || membro.getNome().trim().isEmpty()) {
+                                       throw new Exception("O nome do membro da família é obrigatório.");
+                                   }
+                           
+                                   // Padronização para evitar duplicidade visual (ex: "João" e "joão")
+                                   membro.setNome(membro.getNome().trim().toUpperCase());
+                           
+                                   try {
+                                       membroDAO.salvar(membro);
+                                   } catch (Exception e) {
+                                       // Tratamento para nomes duplicados caso tenha UNIQUE no banco
+                                       if (e.getMessage().contains("unique") || e.getMessage().contains("duplicate")) {
+                                           throw new Exception("Este membro já está cadastrado no sistema.");
+                                       }
+                                       throw new Exception("Erro ao salvar membro: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Retorna a lista de todos os membros da família.
+                                */
+                               public List<MembroDTO> listarTodos() throws Exception {
+                                   try {
+                                       return membroDAO.listarTodos();
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao carregar a lista de membros: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Exclusão
+                                * Verifica se o membro pode ser removido sem quebrar o histórico de gastos.
+                                */
+                               public void excluir(int id) throws Exception {
+                                   if (id <= 0) {
+                                       throw new Exception("ID de membro inválido.");
+                                   }
+                           
+                                   try {
+                                       membroDAO.excluir(id);
+                                   } catch (Exception e) {
+                                       // O PostgreSQL impedirá a exclusão se este ID estiver em 'transacoes_detalhe'
+                                       throw new Exception("Não é possível remover este membro, pois existem gastos registados no nome dele.");
+                                   }
+                               }
+                           }
+                     ProdutoService.java
+                           package com.financas.servico;
+                           
+                           import com.financas.dados.ProdutoDAO;
+                           import com.financas.modelo.ProdutoDTO;
+                           import java.util.List;
+                           import java.util.stream.Collectors;
+                           
+                           public class ProdutoService {
+                           
+                               private ProdutoDAO produtoDAO;
+                           
+                               public ProdutoService() {
+                                   this.produtoDAO = new ProdutoDAO();
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Salvar Produto
+                                * Valida se o produto tem nome e se está vinculado a uma subcategoria.
+                                */
+                               public void salvar(ProdutoDTO produto) throws Exception {
+                                   if (produto.getNome() == null || produto.getNome().trim().isEmpty()) {
+                                       throw new Exception("O nome do produto é obrigatório.");
+                                   }
+                                   
+                                   if (produto.getIdSubcategoria() <= 0) {
+                                       throw new Exception("O produto deve estar vinculado a uma subcategoria.");
+                                   }
+                           
+                                   // Padronização: Nome em maiúsculas para facilitar a busca dinâmica
+                                   produto.setNome(produto.getNome().trim().toUpperCase());
+                           
+                                   try {
+                                       produtoDAO.salvar(produto);
+                                   } catch (Exception e) {
+                                       if (e.getMessage().contains("unique")) {
+                                           throw new Exception("Este produto já está cadastrado nesta subcategoria.");
+                                       }
+                                       throw new Exception("Erro ao salvar produto: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Busca Dinâmica (Auto-complete)
+                                * Filtra a lista de produtos com base no que o usuário digita na interface.
+                                */
+                               public List<ProdutoDTO> buscarPorNome(String termo) throws Exception {
+                                   try {
+                                       List<ProdutoDTO> todos = produtoDAO.listarTodos();
+                                       String termoBusca = termo.toUpperCase();
+                                       
+                                       return todos.stream()
+                                                   .filter(p -> p.getNome().contains(termoBusca))
+                                                   .collect(Collectors.toList());
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao pesquisar produtos: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Lista todos os produtos cadastrados.
+                                */
+                               public List<ProdutoDTO> listarTodos() throws Exception {
+                                   try {
+                                       return produtoDAO.listarTodos();
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao carregar catálogo de produtos: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Exclui um produto, desde que não esteja em uso em transações.
+                                */
+                               public void excluir(int id) throws Exception {
+                                   if (id <= 0) throw new Exception("ID inválido.");
+                                   
+                                   try {
+                                       produtoDAO.excluir(id);
+                                   } catch (Exception e) {
+                                       throw new Exception("Não é possível excluir o produto: ele já foi utilizado em compras registadas.");
+                                   }
+                               }
+                           }
+                     SubcategoriaService.java
+                           package com.financas.servico;
+                           
+                           import com.financas.dados.SubcategoriaDAO;
+                           import com.financas.modelo.SubcategoriaDTO;
+                           import java.util.List;
+                           
+                           public class SubcategoriaService {
+                           
+                               private SubcategoriaDAO subcategoriaDAO;
+                           
+                               public SubcategoriaService() {
+                                   // Inicializa o DAO para comunicação com o banco de dados
+                                   this.subcategoriaDAO = new SubcategoriaDAO();
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Salvar Subcategoria
+                                * Valida se o nome está preenchido e se há vínculo com uma categoria pai.
+                                */
+                               public void salvar(SubcategoriaDTO subcategoria) throws Exception {
+                                   if (subcategoria.getNome() == null || subcategoria.getNome().trim().isEmpty()) {
+                                       throw new Exception("O nome da subcategoria é obrigatório.");
+                                   }
+                           
+                                   if (subcategoria.getIdCategoria() <= 0) {
+                                       throw new Exception("A subcategoria deve estar vinculada a uma categoria principal.");
+                                   }
+                           
+                                   // Padronização para evitar duplicidade no banco (converte para MAIÚSCULAS)
+                                   subcategoria.setNome(subcategoria.getNome().trim().toUpperCase());
+                           
+                                   try {
+                                       subcategoriaDAO.salvar(subcategoria);
+                                   } catch (Exception e) {
+                                       // Tratamento para restrições de unicidade no banco de dados
+                                       if (e.getMessage().toLowerCase().contains("unique") || e.getMessage().toLowerCase().contains("duplicate")) {
+                                           throw new Exception("Já existe uma subcategoria com este nome para a categoria selecionada.");
+                                       }
+                                       throw new Exception("Erro ao salvar subcategoria: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Listagem por Categoria (Filtro Dinâmico)
+                                * Essencial para filtrar as subcategorias na interface quando uma categoria é selecionada.
+                                */
+                               public List<SubcategoriaDTO> listarPorCategoria(int idCategoria) throws Exception {
+                                   if (idCategoria <= 0) {
+                                       throw new Exception("ID de categoria inválido para filtragem.");
+                                   }
+                                   try {
+                                       return subcategoriaDAO.listarPorCategoria(idCategoria);
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao filtrar subcategorias no banco: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Listar todas as subcategorias cadastradas.
+                                */
+                               public List<SubcategoriaDTO> listarTodas() throws Exception {
+                                   try {
+                                       return subcategoriaDAO.listarTodas();
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao carregar todas as subcategorias: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Exclusão
+                                * Verifica o ID e trata possíveis impedimentos por integridade referencial.
+                                */
+                               public void excluir(int id) throws Exception {
+                                   if (id <= 0) {
+                                       throw new Exception("ID inválido para exclusão.");
+                                   }
+                                   
+                                   try {
+                                       subcategoriaDAO.excluir(id);
+                                   } catch (Exception e) {
+                                       // Caso existam produtos vinculados e a FK não permita a exclusão
+                                       throw new Exception("Não foi possível excluir a subcategoria. Verifique se existem produtos vinculados.");
+                                   }
+                               }
+                           }
+                     TransacaoDetalheService.java
+                           package com.financas.servico;
+                           
+                           import com.financas.dados.TransacaoDetalheDAO;
+                           import com.financas.modelo.TransacaoDetalheDTO;
+                           import java.util.List;
+                           
+                           public class TransacaoDetalheService {
+                           
+                               // Agora utilizamos o DAO específico para detalhes
+                               private final TransacaoDetalheDAO detalheDAO;
+                           
+                               public TransacaoDetalheService() {
+                                   this.detalheDAO = new TransacaoDetalheDAO();
+                               }
+                           
+                               /**
+                                * Regra de Negócio: Salvar Item da Transação
+                                * Valida os dados técnicos e financeiros de cada item individual.
+                                * Atualizado para usar getValorUnitario().
+                                */
+                               public void salvar(TransacaoDetalheDTO detalhe) throws Exception {
+                                   
+                                   // Validação de Valor Unitário (Ajustado para a nova nomenclatura)
+                                   if (detalhe.getValorUnitario() <= 0) {
+                                       throw new Exception("O valor unitário do item deve ser maior que zero.");
+                                   }
+                           
+                                   // Validação de Quantidade (Suporta decimais para itens pesáveis)
+                                   if (detalhe.getQuantidade() <= 0) {
+                                       throw new Exception("A quantidade deve ser maior que zero.");
+                                   }
+                           
+                                   // Validação de Vínculos (Foreign Keys)
+                                   if (detalhe.getIdProduto() <= 0) {
+                                       throw new Exception("O item deve estar vinculado a um produto válido.");
+                                   }
+                                   
+                                   if (detalhe.getIdMembro() <= 0) {
+                                       throw new Exception("É necessário atribuir este gasto a um membro da família.");
+                                   }
+                           
+                                   try {
+                                       // Chama o método salvar no DAO que já está usando valor_unitario
+                                       detalheDAO.salvar(detalhe);
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao inserir item no banco de dados: " + e.getMessage());
+                                   }
+                               }
+                           
+                               /**
+                                * Lista todos os itens de uma compra específica.
+                                */
+                               public List<TransacaoDetalheDTO> listarPorCompra(int idCompra) throws Exception {
+                                   if (idCompra <= 0) {
+                                       throw new Exception("ID de compra inválido para consulta de detalhes.");
+                                   }
+                                   try {
+                                       return detalheDAO.listarPorCompra(idCompra);
+                                   } catch (Exception e) {
+                                       throw new Exception("Erro ao carregar os itens da compra: " + e.getMessage());
+                                   }
+                               }
+                           }
+                  [DIR] visao
+                     [DIR] graficos
+                        DashboardController.java
+                              package com.financas.visao.graficos;
+                              
+                              import com.financas.dados.ConexaoDAO;
+                              import com.financas.modelo.DashboardDTO;
+                              import com.financas.modelo.TransacaoDetalheDTO;
+                              import com.financas.servico.DashBoardService;
+                              import javafx.collections.FXCollections;
+                              import javafx.fxml.FXML;
+                              import javafx.scene.control.TableColumn;
+                              import javafx.scene.control.TableView;
+                              import javafx.scene.control.cell.PropertyValueFactory;
+                              import javafx.scene.layout.VBox;
+                              import java.sql.Connection;
+                              import java.util.List;
+                              
+                              public class DashboardController {
+                              
+                                  @FXML private VBox containerGraficoPizza; 
+                                  @FXML private VBox containerGraficoBarras; 
+                                  
+                                  // Itens da Tabela
+                                  @FXML private TableView<TransacaoDetalheDTO> tabelaHistorico;
+                                  @FXML private TableColumn<TransacaoDetalheDTO, String> colProduto;
+                                  @FXML private TableColumn<TransacaoDetalheDTO, String> colMembro;
+                                  @FXML private TableColumn<TransacaoDetalheDTO, Double> colQuantidade; // ADICIONADO: Para não dar erro
+                                  @FXML private TableColumn<TransacaoDetalheDTO, Double> colValor;
+                              
+                                  private DashBoardService dashBoardService;
+                              
+                                  @FXML
+                                  public void initialize() {
+                                      try {
+                                          Connection conexao = ConexaoDAO.conectar();
+                                          dashBoardService = new DashBoardService(conexao);
+                                          
+                                          configurarColunasTabela();
+                                          atualizarDashboard();
+                                          
+                                      } catch (Exception e) {
+                                          e.printStackTrace();
+                                      }
+                                  }
+                              
+                                  private void configurarColunasTabela() {
+                                      // Vinculação com os atributos do seu TransacaoDetalheDTO
+                                      colProduto.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
+                                      colMembro.setCellValueFactory(new PropertyValueFactory<>("nomeMembro"));
+                                      colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade")); // CONFIGURADO
+                                      colValor.setCellValueFactory(new PropertyValueFactory<>("valorParcela"));
+                                  }
+                              
+                                  public void atualizarDashboard() {
+                                      // 1. Gráfico de Pizza
+                                      List<DashboardDTO> dadosPizza = dashBoardService.carregarDadosPizza();
+                                      containerGraficoPizza.getChildren().clear();
+                                      containerGraficoPizza.getChildren().add(GeradorGraficos.criarGraficoPizza(dadosPizza, "Gastos por Categoria"));
+                              
+                                      // 2. Gráfico de Barras
+                                      List<DashboardDTO> dadosMembros = dashBoardService.carregarDadosMembros(); 
+                                      containerGraficoBarras.getChildren().clear();
+                                      containerGraficoBarras.getChildren().add(GeradorGraficos.criarGraficoBarras(dadosMembros, "Gastos por Membro"));
+                              
+                                      // 3. VINCULAR À TABELA
+                                      List<TransacaoDetalheDTO> itensDoBanco = dashBoardService.carregarHistoricoItens();
+                                      
+                                      if (itensDoBanco != null) {
+                                          tabelaHistorico.setItems(FXCollections.observableArrayList(itensDoBanco));
+                                          tabelaHistorico.refresh();
+                                      }
+                                  }
+                              }
+                        GeradorGraficos.java
+                              package com.financas.visao.graficos;
+                              
+                              import com.financas.modelo.DashboardDTO;
+                              import javafx.collections.FXCollections;
+                              import javafx.collections.ObservableList;
+                              import javafx.geometry.Side;
+                              import javafx.scene.chart.*;
+                              import java.util.List;
+                              import java.util.stream.Collectors;
+                              
+                              public class GeradorGraficos {
+                              
+                                  /**
+                                   * Gráfico de Pizza (Categorias)
+                                   */
+                                  public static PieChart criarGraficoPizza(List<DashboardDTO> dados, String titulo) {
+                                      ObservableList<PieChart.Data> dadosGrafico = dados.stream()
+                                          .map(dto -> new PieChart.Data(dto.getNome(), dto.getValor()))
+                                          .collect(Collectors.toCollection(FXCollections::observableArrayList));
+                              
+                                      PieChart grafico = new PieChart(dadosGrafico);
+                                      grafico.setTitle(titulo);
+                                      grafico.setLegendSide(Side.RIGHT);
+                                      grafico.setLabelsVisible(true);
+                                      
+                                      aplicarCss(grafico);
+                                      return grafico;
+                                  }
+                              
+                                  /**
+                                   * NOVO: Gráfico de Barras (Membros da Família)
+                                   */
+                                  public static BarChart<String, Number> criarGraficoBarras(List<DashboardDTO> dados, String titulo) {
+                                      // 1. Configura os eixos (X = Nomes, Y = Valores)
+                                      CategoryAxis eixoX = new CategoryAxis();
+                                      NumberAxis eixoY = new NumberAxis();
+                                      eixoX.setLabel("Membros");
+                                      eixoY.setLabel("Valor (R$)");
+                              
+                                      // 2. Cria o gráfico de barras
+                                      BarChart<String, Number> grafico = new BarChart<>(eixoX, eixoY);
+                                      grafico.setTitle(titulo);
+                                      grafico.setLegendVisible(false); // Geralmente barras não precisam de legenda se o eixo X já tem nomes
+                              
+                                      // 3. Converte os dados para uma Série (Series)
+                                      XYChart.Series<String, Number> serie = new XYChart.Series<>();
+                                      for (DashboardDTO dto : dados) {
+                                          serie.getData().add(new XYChart.Data<>(dto.getNome(), dto.getValor()));
+                                      }
+                              
+                                      grafico.getData().add(serie);
+                                      
+                                      aplicarCss(grafico);
+                                      return grafico;
+                                  }
+                              
+                                  /**
+                                   * Método auxiliar para não repetir código de CSS
+                                   */
+                                  private static void aplicarCss(javafx.scene.layout.Region grafico) {
+                                      try {
+                                          String css = GeradorGraficos.class.getResource("/com/financas/estilo/estilo-graficos.css").toExternalForm();
+                                          grafico.getStylesheets().add(css);
+                                      } catch (Exception e) {
+                                          System.err.println("Aviso: CSS de gráficos não encontrado.");
+                                      }
+                                  }
+                              }
+                     MainApp.java
+                           package com.financas.visao;
+                           
+                           import javafx.application.Application;
+                           import javafx.fxml.FXMLLoader;
+                           import javafx.scene.Parent;
+                           import javafx.scene.Scene;
+                           import javafx.stage.Stage;
+                           
+                           
+                           public class MainApp extends Application {
+                               @Override
+                               public void start(Stage stage) throws Exception {
+                                   Parent root = FXMLLoader.load(getClass().getResource("/com/financas/visao/MainLayout.fxml"));      
+                                   Scene scene = new Scene(root);
+                                   String css = getClass().getResource("/com/financas/estilo/estilo-moderno.css").toExternalForm();
+                                   scene.getStylesheets().add(css);
+                                   stage.setTitle("Gestor de Gastos PRO - Versão 4.0");
+                                   stage.setScene(scene);
+                                   stage.show();
+                               }
+                           
+                               public static void main(String[] args) {
+                                   launch(args);
+                               }
+                           }
+                     MainController.java
+                           package com.financas.visao;
+                           
+                           import com.financas.dados.CompraDAO;
+                           import com.financas.modelo.*;
+                           import com.financas.servico.*;
+                           import javafx.collections.FXCollections;
+                           import javafx.collections.ObservableList;
+                           import javafx.event.ActionEvent;
+                           import javafx.fxml.FXML;
+                           import javafx.scene.control.*;
+                           import javafx.scene.control.cell.PropertyValueFactory;
+                           import javafx.scene.layout.StackPane;
+                           import javafx.fxml.Initializable;
+                           
+                           import java.net.URL;
+                           import java.time.LocalDate;
+                           import java.util.ResourceBundle;
+                           
+                           public class MainController implements Initializable {
+                           
+                               // =========================================================================
+                               // ATRIBUTOS FXML
+                               // =========================================================================
+                               @FXML private ComboBox<EstabelecimentoDTO> comboEstabelecimento;
+                               @FXML private ComboBox<String> comboPagamento;
+                               @FXML private DatePicker dpData;
+                               @FXML private TextField txtValorNota; 
+                               @FXML private Label lblTotalCompra;
+                           
+                               @FXML private ComboBox<MembroDTO> comboMembroItem; 
+                               @FXML private ComboBox<CategoriaDTO> comboCategoria;
+                               @FXML private ComboBox<SubcategoriaDTO> comboSubcategoria;
+                               @FXML private ComboBox<ProdutoDTO> comboProduto;
+                               @FXML private TextField txtQuantidade;
+                               @FXML private TextField txtValorUnitario;
+                               
+                               @FXML private TableView<TransacaoDetalheDTO> tabelaItens;
+                               @FXML private TableColumn<TransacaoDetalheDTO, String> colMembro;
+                               @FXML private TableColumn<TransacaoDetalheDTO, String> colProduto;
+                               @FXML private TableColumn<TransacaoDetalheDTO, Double> colQuantidade;
+                               @FXML private TableColumn<TransacaoDetalheDTO, Double> colValorUnitario;
+                               @FXML private TableColumn<TransacaoDetalheDTO, Void> colAcoes;
+                           
+                               // =========================================================================
+                               // SERVIÇOS E ESTADO
+                               // =========================================================================
+                               private MembroService membroService = new MembroService();
+                               private EstabelecimentoService estabService = new EstabelecimentoService();
+                               private CategoriaService categoriaService = new CategoriaService();
+                               private SubcategoriaService subcategoriaService = new SubcategoriaService();
+                               private ProdutoService produtoService = new ProdutoService();
+                           
+                               private ObservableList<TransacaoDetalheDTO> itensDaCompra = FXCollections.observableArrayList();
+                               private double totalGeral = 0.0;
+                           
+                               // =========================================================================
+                               // INICIALIZAÇÃO E CONFIGURAÇÃO
+                               // =========================================================================
+                               @Override
+                               public void initialize(URL location, ResourceBundle resources) {
+                                   configurarTabela();
+                                   carregarCombos();
+                                   configurarListeners();
+                           
+                                   // Estados iniciais
+                                   comboCategoria.setDisable(true);
+                                   comboSubcategoria.setDisable(true);
+                                   comboPagamento.getItems().addAll("Dinheiro", "Cartão de Crédito", "Cartão de Débito", "Pix");
+                                   lblTotalCompra.setText("R$ 0,00");
+                               }
+                           
+                               private void configurarTabela() {
+                                   colMembro.setCellValueFactory(new PropertyValueFactory<>("nomeMembro"));
+                                   colProduto.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
+                                   colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+                                   colValorUnitario.setCellValueFactory(new PropertyValueFactory<>("valorUnitario"));
+                           
+                                   colAcoes.setCellFactory(param -> new TableCell<>() {
+                                       private final Button btnExcluir = new Button("Excluir/Alterar");
+                                       private final StackPane container = new StackPane(btnExcluir);
+                           
+                                       {
+                                           btnExcluir.getStyleClass().add("botao-excluir-tabela");
+                                           btnExcluir.setOnAction(event -> {
+                                               TransacaoDetalheDTO item = getTableView().getItems().get(getIndex());
+                                               editarItemSelecionado(item);
+                                           });
+                                       }
+                           
+                                       @Override
+                                       protected void updateItem(Void item, boolean empty) {
+                                           super.updateItem(item, empty);
+                                           if (empty) {
+                                               setGraphic(null);
+                                           } else {
+                                               setGraphic(container);
+                                               container.setAlignment(javafx.geometry.Pos.CENTER);
+                                           }
+                                       }
+                                   });
+                           
+                                   tabelaItens.setItems(itensDaCompra);
+                               }
+                           
+                               private void carregarCombos() {
+                                   try {
+                                       comboMembroItem.setItems(FXCollections.observableArrayList(membroService.listarTodos()));
+                                       comboEstabelecimento.setItems(FXCollections.observableArrayList(estabService.listarTodos()));
+                                       comboCategoria.setItems(FXCollections.observableArrayList(categoriaService.listarTodos()));
+                                       comboProduto.setItems(FXCollections.observableArrayList(produtoService.listarTodos()));
+                                   } catch (Exception e) {
+                                       exibirAlerta("Erro ao carregar listas: " + e.getMessage());
+                                   }
+                               }
+                           
+                               private void configurarListeners() {
+                                   // Filtro Categoria -> Subcategoria
+                                   comboCategoria.getSelectionModel().selectedItemProperty().addListener((obs, antigo, novo) -> {
+                                       if (novo != null) {
+                                           try {
+                                               comboSubcategoria.setItems(FXCollections.observableArrayList(
+                                                   subcategoriaService.listarPorCategoria(novo.getIdCategoria())
+                                               ));
+                                           } catch (Exception e) {
+                                               exibirAlerta("Erro ao carregar subcategorias: " + e.getMessage());
+                                           }
+                                       } else {
+                                           comboSubcategoria.getItems().clear();
+                                       }
+                                   });
+                           
+                                   // Automação Produto -> Sub -> Categoria
+                                   comboProduto.getSelectionModel().selectedItemProperty().addListener((obs, antigo, novo) -> {
+                                       if (novo != null && novo.getSubcategoria() != null) {
+                                           comboSubcategoria.setValue(novo.getSubcategoria());
+                                           if (novo.getSubcategoria().getCategoria() != null) {
+                                               comboCategoria.setValue(novo.getSubcategoria().getCategoria());
+                                           }
+                                       }
+                                   });
+                           
+                                   // Listener para atualizar cores do total em tempo real
+                                   txtValorNota.textProperty().addListener((obs, antigo, novo) -> atualizarTotal());
+                               }
+                           
+                               // =========================================================================
+                               // AÇÕES DE INTERFACE (BOTÕES)
+                               // =========================================================================
+                               @FXML
+                               void adicionarItem(ActionEvent event) {
+                                   try {
+                                       if (!validarCabecalho()) return;
+                           
+                                       if (comboProduto.getValue() == null || comboMembroItem.getValue() == null || 
+                                           txtQuantidade.getText().isEmpty() || txtValorUnitario.getText().isEmpty()) {
+                                           exibirAlerta("Preencha todos os campos do item!");
+                                           return;
+                                       }
+                           
+                                       TransacaoDetalheDTO item = new TransacaoDetalheDTO();
+                                       item.setIdProduto(comboProduto.getValue().getIdProduto());
+                                       item.setIdMembro(comboMembroItem.getValue().getIdMembro());
+                                       item.setNomeMembro(comboMembroItem.getValue().getNome()); 
+                                       item.setNomeProduto(comboProduto.getValue().getNome()); 
+                                       item.setNomeCategoria(comboCategoria.getValue().getNome()); 
+                                       item.setNomeSubcategoria(comboSubcategoria.getValue().getNome()); 
+                                       item.setQuantidade(Double.parseDouble(txtQuantidade.getText().replace(",", ".")));
+                                       item.setValorUnitario(Double.parseDouble(txtValorUnitario.getText().replace(",", "."))); 
+                                       
+                                       itensDaCompra.add(item);
+                                       atualizarTotal();
+                                       limparCamposItem();
+                           
+                                   } catch (NumberFormatException e) {
+                                       exibirAlerta("Quantidade e Valor devem ser números válidos.");
+                                   }
+                               }
+                           
+                               @FXML
+                               void salvarCompra(ActionEvent event) {
+                                   try {
+                                       // 1. Validação do Valor da Nota
+                                       String valorNotaStr = txtValorNota.getText().replace(",", ".");
+                                       if (valorNotaStr.isEmpty()) {
+                                           exibirAlerta("Por favor, informe o valor total da nota antes de finalizar.");
+                                           return;
+                                       }
+                                       double valorNota = Double.parseDouble(valorNotaStr);
+                           
+                                       // 2. Validação da Diferença (Soma dos itens vs Nota)
+                                       if (Math.abs(totalGeral - valorNota) > 2.00) {
+                                           exibirAlerta(String.format("Diferença entre Nota e Soma dos itens é superior a R$ 2,00."));
+                                           return;
+                                       }
+                           
+                                       // 3. Montar o Objeto Mestre (Cabeçalho)
+                                       CompraMestreDTO mestre = new CompraMestreDTO();
+                                       
+                                       if (comboEstabelecimento.getValue() != null) {
+                                           mestre.setIdEstabelecimento(comboEstabelecimento.getValue().getIdEstabelecimento());
+                                       } else {
+                                           exibirAlerta("Selecione um estabelecimento!");
+                                           return;
+                                       }
+                           
+                                       mestre.setValorTotal(totalGeral);
+                                       
+                                       // Usando o seu DatePicker 'dpData'
+                                       LocalDate dataDoc = dpData.getValue() != null ? dpData.getValue() : LocalDate.now();
+                                       mestre.setDataEmissao(dataDoc);
+                                       
+                                       // Usando o seu ComboBox 'comboPagamento'
+                                       mestre.setFormaPagamento(comboPagamento.getValue() != null ? comboPagamento.getValue() : "DINHEIRO");
+                           
+                                       // 4. Calcular o ID do Mês de Referência baseado na data
+                                       int idMesCalculado = dataDoc.getMonthValue();
+                           
+                                       // 5. PERSISTÊNCIA NO BANCO (A parte que estava faltando)
+                                       // Certifique-se que o objeto compraDAO está instanciado na classe
+                                       int idGerado = new CompraDAO().salvar(mestre); 
+                           
+                                       if (idGerado > 0) {
+                                           // 6. Salvar os Itens (Usando a sua lista 'itensDaCompra')
+                                           CompraDAO daoItem = new CompraDAO();
+                                           for (TransacaoDetalheDTO item : itensDaCompra) {
+                                               item.setIdCompra(idGerado);
+                                               item.setIdMesRef(idMesCalculado); // Vincula ao mês da data do cupom
+                                               
+                                               daoItem.salvarItem(item);
+                                           }
+                           
+                                           exibirInformativo("Compra salva com sucesso no PostgreSQL!");
+                                           limparTudo(); 
+                                       }
+                           
+                                   } catch (NumberFormatException e) {
+                                       exibirAlerta("Valor da nota inválido!");
+                                   } catch (Exception e) {
+                                       e.printStackTrace();
+                                       exibirAlerta("Erro ao salvar no banco: " + e.getMessage());
+                                   }
+                               }
+                           
+                               // =========================================================================
+                               // LÓGICA INTERNA E SUPORTE
+                               // =========================================================================
+                               private void editarItemSelecionado(TransacaoDetalheDTO item) {
+                                   txtQuantidade.setText(String.valueOf(item.getQuantidade()).replace(".", ","));
+                                   txtValorUnitario.setText(String.valueOf(item.getValorUnitario()).replace(".", ","));
+                           
+                                   comboMembroItem.getItems().stream()
+                                       .filter(m -> m.getIdMembro() == item.getIdMembro())
+                                       .findFirst().ifPresent(m -> comboMembroItem.setValue(m));
+                           
+                                   comboProduto.getItems().stream()
+                                       .filter(p -> p.getIdProduto() == item.getIdProduto())
+                                       .findFirst().ifPresent(p -> comboProduto.setValue(p));
+                           
+                                   itensDaCompra.remove(item);
+                                   atualizarTotal();
+                                   comboMembroItem.requestFocus();
+                               }
+                           
+                               private void atualizarTotal() {
+                                   totalGeral = itensDaCompra.stream().mapToDouble(TransacaoDetalheDTO::getValorUnitario).sum();
+                                   lblTotalCompra.setText(String.format("R$ %.2f", totalGeral));
+                           
+                                   try {
+                                       String valorNotaStr = txtValorNota.getText().replace(",", ".");
+                                       if (!valorNotaStr.isEmpty()) {
+                                           double valorNota = Double.parseDouble(valorNotaStr);
+                                           if (Math.abs(totalGeral - valorNota) > 2.00) { 
+                                               lblTotalCompra.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold;");
+                                           } else {
+                                               lblTotalCompra.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");
+                                           }
+                                       }
+                                   } catch (Exception e) {
+                                       lblTotalCompra.setStyle("-fx-text-fill: #2c3e50;");
+                                   }
+                               }
+                           
+                               private boolean validarCabecalho() {
+                                   if (comboEstabelecimento.getValue() == null || dpData.getValue() == null || 
+                                       comboPagamento.getValue() == null || txtValorNota.getText().trim().isEmpty()) {
+                                       
+                                       exibirAlerta("Preencha os dados da nota antes de lançar produtos!");
+                                       if (comboEstabelecimento.getValue() == null) comboEstabelecimento.requestFocus();
+                                       return false;
+                                   }
+                                   return true;
+                               }
+                           
+                               private void limparCamposItem() {
+                                   txtQuantidade.clear();
+                                   txtValorUnitario.clear();
+                                   comboMembroItem.getSelectionModel().clearSelection();
+                                   comboProduto.getSelectionModel().clearSelection();
+                                   comboSubcategoria.setValue(null);
+                                   comboCategoria.setValue(null);
+                                   comboMembroItem.requestFocus(); 
+                               }
+                           
+                               private void limparTudo() {
+                                   itensDaCompra.clear();
+                                   txtValorNota.clear();
+                                   limparCamposItem();
+                                   comboEstabelecimento.getSelectionModel().clearSelection();
+                                   dpData.setValue(null);
+                                   comboPagamento.getSelectionModel().clearSelection();
+                                   totalGeral = 0.0;
+                                   lblTotalCompra.setText("R$ 0,00");
+                               }
+                           
+                               private void exibirAlerta(String msg) {
+                                   Alert alert = new Alert(Alert.AlertType.ERROR);
+                                   alert.setHeaderText(null);
+                                   alert.setContentText(msg);
+                                   alert.showAndWait();
+                               }
+                           
+                               private void exibirInformativo(String msg) {
+                                   Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                   alert.setHeaderText(null);
+                                   alert.setContentText(msg);
+                                   alert.showAndWait();
+                               }
+                           }
+                     MainLayoutController.java
+                           package com.financas.visao;
+                           
+                           import javafx.fxml.FXML;
+                           import javafx.fxml.FXMLLoader;
+                           import javafx.scene.Parent;
+                           import javafx.scene.layout.StackPane;
+                           import java.io.IOException;
+                           
+                           public class MainLayoutController {
+                           
+                               @FXML
+                               private StackPane conteudoArea; // O ID do centro do seu BorderPane no FXML
+                           
+                               @FXML
+                               public void initialize() {
+                                   // Ao iniciar, carrega por padrão a tela de lançamentos
+                                   exibirTelaLancamentos();
+                               }
+                           
+                               @FXML
+                               private void exibirTelaLancamentos() {
+                                   carregarTela("/com/financas/visao/MainView.fxml");
+                               }
+                           
+                               @FXML
+                               private void exibirTelaGraficos() {
+                                   carregarTela("/com/financas/visao/graficos/DashboardView.fxml");
+                               }
+                           
+                               /**
+                                * Método genérico para trocar o conteúdo do centro da tela.
+                                */
+                               private void carregarTela(String caminhoFxml) {
+                                   try {
+                                       FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoFxml));
+                                       Parent tela = loader.load();
+                                       
+                                       // Limpa o que estava no centro e coloca a nova tela
+                                       conteudoArea.getChildren().clear();
+                                       conteudoArea.getChildren().add(tela);
+                                       
+                                   } catch (IOException e) {
+                                       System.err.println("Erro ao carregar a tela: " + caminhoFxml);
+                                       e.printStackTrace();
+                                   }
+                               }
+                           }
+            module-info.java
+                  module com.financas {
+                      // Necessário para o JavaFX
+                      requires javafx.controls;
+                      requires javafx.fxml;
+                      
+                      // Necessário para conexão com Banco de Dados
+                      requires java.sql;
+                  
+                      // Abre os pacotes para o FXML e Reflexão
+                      opens com.financas.visao to javafx.fxml;
+                      
+                      // ADICIONE ESTA LINHA ABAIXO:
+                      opens com.financas.visao.graficos to javafx.fxml; 
+                      
+                      opens com.financas.modelo to javafx.base; // Permite que TableView leia os DTOs
+                      
+                      // Exporta os pacotes para serem usados pelo sistema
+                      exports com.financas.visao;
+                      exports com.financas.visao.graficos; // ADICIONE ESTA LINHA TAMBÉM
+                      exports com.financas.modelo;
+                      exports com.financas.dados;
+                  }
+         [DIR] resources
+            [DIR] com
+               [DIR] financas
+                  [DIR] estilo
+                     estilo-graficos.css
+                           /* Configuração do Card onde o gráfico fica dentro */
+                           .card-grafico {
+                               -fx-background-color: white;
+                               -fx-background-radius: 15;
+                               -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+                               -fx-padding: 20;
+                           }
+                           
+                           /* Título do Gráfico */
+                           .chart-title {
+                               -fx-text-fill: #2c3e50;
+                               -fx-font-size: 18px;
+                               -fx-font-weight: bold;
+                           }
+                           
+                           /* Legenda do Gráfico */
+                           .chart-legend {
+                              -fx-background-color: transparent;
+                              -fx-padding: 20;
+                           }
+                           
+                           .chart-legend-item {
+                               -fx-text-fill: #34495e;
+                               -fx-font-size: 13px;
+                           }
+                           
+                           /* Estilização das fatias da Pizza (Cores Modernas) */
+                           /* Fatia 1 */
+                           .default-color0.chart-pie { -fx-pie-color: #3498db; } /* Azul */
+                           /* Fatia 2 */
+                           .default-color1.chart-pie { -fx-pie-color: #2ecc71; } /* Verde */
+                           /* Fatia 3 */
+                           .default-color2.chart-pie { -fx-pie-color: #e74c3c; } /* Vermelho */
+                           /* Fatia 4 */
+                           .default-color3.chart-pie { -fx-pie-color: #f1c40f; } /* Amarelo */
+                           /* Fatia 5 */
+                           .default-color4.chart-pie { -fx-pie-color: #9b59b6; } /* Roxo */
+                           /* Fatia 6 */
+                           .default-color5.chart-pie { -fx-pie-color: #e67e22; } /* Laranja */
+                           
+                           /* Efeito ao passar o mouse ou destacar a fatia */
+                           .chart-pie {
+                               -fx-border-color: white;
+                               -fx-border-width: 2px;
+                           }
+                           
+                           /* Rótulos (Labels) das fatias */
+                           .chart-pie-label {
+                               -fx-fill: #7f8c8d;
+                               -fx-font-size: 12px;
+                           }
+                           
+                           .chart-pie-label-line {
+                               -fx-stroke: #bdc3c7;
+                           }
+                           
+                           .chart-pie:hover {
+                               -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 0);
+                               -fx-scale-x: 1.02;
+                               -fx-scale-y: 1.02;
+                           }
+                     estilo-moderno.css
+                           /* =============================================================================
+                              1. CORE & TIPOGRAFIA (Base do Sistema)
+                              ============================================================================= */
+                           .root {
+                               -fx-background-color: #F0F2F5;
+                               -fx-font-family: "Segoe UI", Segoe, Tahoma, Helvetica, Arial, sans-serif;
+                           }
+                           
+                           .label {
+                               -fx-text-fill: #2C3E50;
+                               -fx-font-size: 11pt;
+                           }
+                           
+                           /* =============================================================================
+                              2. PAINÉIS E CONTENTORES (Layout)
+                              ============================================================================= */
+                           .titled-pane {
+                               -fx-text-fill: white;
+                               -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);
+                           }
+                           
+                           .titled-pane > .title {
+                               -fx-background-color: #34495E;
+                               -fx-background-radius: 8px 8px 0 0;
+                               -fx-padding: 12px;
+                           }
+                           
+                           .titled-pane > .title > .text {
+                               -fx-font-weight: bold;
+                               -fx-font-size: 12pt;
+                           }
+                           
+                           .titled-pane > .content {
+                               -fx-background-color: white;
+                               -fx-border-color: #EAECEE;
+                               -fx-border-width: 0 1 1 1;
+                               -fx-background-radius: 0 0 8px 8px;
+                               -fx-padding: 15px;
+                           }
+                           
+                           .titled-pane .content .label {
+                               -fx-font-weight: bold;
+                               -fx-text-fill: #5D6D7E;
+                               -fx-font-size: 10pt;
+                           }
+                           
+                           .footer-section {
+                               -fx-background-color: white;
+                               -fx-padding: 20px;
+                               -fx-border-radius: 8px;
+                               -fx-border-color: #3498DB;
+                               -fx-border-width: 2 0 0 0;
+                               -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 0, -5, 0, 0);
+                           }
+                           
+                           /* =============================================================================
+                              3. INPUTS E FORMULÁRIOS (Interação)
+                              ============================================================================= */
+                           /* Padronização de altura e bordas */
+                           .combo-box, .date-picker, .text-field {
+                               -fx-background-color: #FFFFFF;
+                               -fx-border-color: #D5DBDB;
+                               -fx-border-radius: 4px;
+                               -fx-background-radius: 4px;
+                               -fx-padding: 5px;
+                               -fx-pref-height: 35px;
+                               -fx-min-height: 35px;
+                               -fx-max-height: 35px;
+                           }
+                           
+                           .combo-box:focused, .date-picker:focused, .text-field:focused {
+                               -fx-border-color: #3498DB;
+                               -fx-border-width: 1.5px;
+                           }
+                           
+                           /* --- CORREÇÃO DO DATE-PICKER (Retângulo Duplo) --- */
+                           .date-picker > .arrow-button {
+                               -fx-background-color: transparent !important;
+                               -fx-background-insets: 0 !important;
+                               -fx-background-radius: 0 4px 4px 0 !important;
+                               -fx-border-width: 0 !important;
+                               -fx-padding: 0 10 0 5 !important;
+                           }
+                           
+                           .date-picker > .arrow-button:focused {
+                               -fx-background-color: transparent !important;
+                           }
+                           
+                           .date-picker > .text-field {
+                               -fx-background-background-insets: 0 !important;
+                               -fx-background-color: transparent !important;
+                               -fx-border-width: 0 !important;
+                           }
+                           
+                           .date-picker > .arrow-button > .arrow {
+                               -fx-background-color: #34495E !important;
+                               -fx-padding: 5px !important;
+                           }
+                           
+                           /* =============================================================================
+                              4. TABELAS (Visualização de Dados)
+                              ============================================================================= */
+                           .table-view {
+                               -fx-background-color: white;
+                               -fx-border-color: #EAECEE;
+                               -fx-border-radius: 8px;
+                               -fx-background-radius: 8px;
+                               -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);
+                           }
+                           
+                           .table-view .column-header {
+                               -fx-background-color: #F8F9FA;
+                               -fx-border-color: #EAECEE;
+                               -fx-border-width: 0 0 1 0;
+                               -fx-padding: 10px;
+                           }
+                           
+                           .table-view .column-header .label {
+                               -fx-text-fill: #34495E;
+                               -fx-font-weight: bold;
+                               -fx-font-size: 10pt;
+                           }
+                           
+                           .table-row-cell {
+                               -fx-cell-size: 40px; 
+                               -fx-border-color: transparent transparent #F2F3F4 transparent;
+                           }
+                           
+                           .table-view .table-row-cell:odd {
+                               -fx-background-color: #fcfcfc;
+                           }
+                           
+                           .table-view .table-row-cell:selected {
+                               -fx-background-color: #3498db;
+                               -fx-background-insets: 0;
+                           }
+                           
+                           .table-cell {
+                               -fx-padding: 0 5 0 5;
+                               -fx-alignment: CENTER_LEFT;
+                           }
+                           
+                           /* =============================================================================
+                              5. BOTÕES E COMPONENTES DE ACÇÃO
+                              ============================================================================= */
+                           .button {
+                               -fx-cursor: hand;
+                               -fx-background-radius: 8px;
+                               -fx-font-weight: bold;
+                               -fx-font-size: 13px;
+                               -fx-text-fill: white;
+                               -fx-padding: 10px 20px;
+                               -fx-pref-height: 35px;
+                           }
+                           
+                           /* Botões de fluxo principal */
+                           .button-sucesso { -fx-background-color: #27AE60; }
+                           .button-sucesso:hover { -fx-background-color: #2ECC71; }
+                           
+                           .button-primario {
+                               -fx-background-color: #2980B9;
+                               -fx-font-size: 15px;
+                               -fx-pref-height: 60px;
+                           }
+                           
+                           /* Botão específico da tabela */
+                           .botao-excluir-tabela {
+                               -fx-background-color: #ff7675;
+                               -fx-text-fill: white;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 5px;
+                               -fx-padding: 0 10 0 10;
+                               -fx-font-size: 10px;
+                               -fx-min-width: 100px; 
+                               -fx-min-height: 25px;
+                               -fx-max-height: 25px;
+                               -fx-cursor: hand;
+                           }
+                           
+                           .botao-excluir-tabela:hover {
+                               -fx-background-color: #d63031;
+                           }
+                           
+                           /* =============================================================================
+                              6. UTILITÁRIOS (Classes Auxiliares)
+                              ============================================================================= */
+                           .label-total-prefixo {
+                               -fx-font-size: 10pt;
+                               -fx-font-weight: bold;
+                               -fx-text-fill: #95A5A6;
+                           }
+                           
+                           .label-total-valor {
+                               -fx-font-size: 32px;
+                               -fx-font-weight: bold;
+                           }
+                           
+                           .coluna-direita {
+                               -fx-alignment: CENTER_RIGHT;
+                               -fx-padding: 0 15 0 0;
+                           }
+                           
+                           .coluna-centralizada {
+                               -fx-alignment: CENTER;
+                               -fx-padding: 0;
+                           }
+                           
+                           /* =============================================================================
+                              7. MENU LATERAL (Navegação)
+                              ============================================================================= */
+                           .sidebar {
+                               -fx-background-color: #2C3E50; /* Azul escuro combinando com seus TitledPanes */
+                               -fx-padding: 20px;
+                           }
+                           
+                           .menu-button {
+                               -fx-background-color: transparent;
+                               -fx-text-fill: #ECF0F1;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-font-size: 14px;
+                               -fx-border-color: #34495E;
+                               -fx-border-width: 0 0 1 0; /* Linha sutil abaixo do botão */
+                           }
+                           
+                           .menu-button:hover {
+                               -fx-background-color: #34495E;
+                               -fx-text-fill: white;
+                           }
+                  [DIR] visao
+                     [DIR] graficos
+                        DashboardView.fxml
+                              <?xml version="1.0" encoding="UTF-8"?>
+                              
+                              <?import javafx.geometry.Insets?>
+                              <?import javafx.scene.control.Label?>
+                              <?import javafx.scene.control.ScrollPane?>
+                              <?import javafx.scene.control.TableColumn?>
+                              <?import javafx.scene.control.TableView?>
+                              <?import javafx.scene.layout.VBox?>
+                              <?import javafx.scene.text.Font?>
+                              
+                              <ScrollPane fitToWidth="true" pannable="true" style="-fx-background-color: transparent;" 
+                                          stylesheets="@../../estilo/estilo-graficos.css" 
+                                          xmlns="http://javafx.com/javafx/17" 
+                                          xmlns:fx="http://javafx.com/fxml/1" 
+                                          fx:controller="com.financas.visao.graficos.DashboardController">
+                                 
+                                 <content>
+                                    <VBox spacing="30.0" style="-fx-background-color: #F0F2F5;">
+                                       <children>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label text="Análise Financeira" textFill="#2c3e50">
+                                                   <font>
+                                                      <Font name="System Bold" size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label text="Resumo detalhado dos gastos da família" textFill="#7f8c8d">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                             </VBox.margin>
+                                          </VBox>
+                              
+                                          <VBox fx:id="containerGraficoPizza" alignment="CENTER" minHeight="450.0" 
+                                                styleClass="card-grafico" />
+                              
+                                          <VBox fx:id="containerGraficoBarras" alignment="CENTER" minHeight="450.0" 
+                                                styleClass="card-grafico" />
+                              
+                                          <VBox spacing="10.0" styleClass="card-grafico">
+                                             <children>
+                                                <Label text="Histórico de Itens Lançados" textFill="#2c3e50">
+                                                   <font>
+                                                      <Font name="System Bold" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TableView fx:id="tabelaHistorico" minHeight="400.0" prefWidth="200.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="colProduto" prefWidth="200.0" text="Produto" />
+                                                    <TableColumn fx:id="colMembro" prefWidth="150.0" text="Membro" />
+                                                    <TableColumn fx:id="colQuantidade" prefWidth="100.0" text="Qtd" />
+                                                    <TableColumn fx:id="colValor" prefWidth="120.0" text="Valor Total" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                             </padding>
+                                          </VBox>
+                                          
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                                       </padding>
+                                    </VBox>
+                                 </content>
+                              </ScrollPane>
+                     MainLayout.fxml
+                           <?xml version="1.0" encoding="UTF-8"?>
+                           
+                           <?import javafx.geometry.Insets?>
+                           <?import javafx.scene.control.Button?>
+                           <?import javafx.scene.control.Label?>
+                           <?import javafx.scene.layout.BorderPane?>
+                           <?import javafx.scene.layout.StackPane?>
+                           <?import javafx.scene.layout.VBox?>
+                           <?import javafx.scene.text.Font?>
+                           
+                           <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
+                                       prefHeight="700.0" prefWidth="1000.0" 
+                                       stylesheets="@../estilo/estilo-moderno.css" 
+                                       xmlns="http://javafx.com/javafx/17" 
+                                       xmlns:fx="http://javafx.com/fxml/1" 
+                                       fx:controller="com.financas.visao.MainLayoutController">
+                              
+                              <left>
+                                 <VBox prefWidth="200.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+                                   <children>
+                                       <Label text="GESTOR PRO" textFill="WHITE">
+                                           <font>
+                                               <Font name="System Bold" size="20.0" />
+                                           </font>
+                                           <VBox.margin>
+                                               <Insets bottom="20.0" left="10.0" top="20.0" />
+                                           </VBox.margin>
+                                       </Label>
+                                       
+                                       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" 
+                                               onAction="#exibirTelaLancamentos" styleClass="menu-button" text="Lançamentos" />
+                                       
+                                       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" 
+                                               onAction="#exibirTelaGraficos" styleClass="menu-button" text="Estatísticas" />
+                                   </children>
+                                   </VBox>
+                              </left>
+                           
+                              <center>
+                                 <StackPane fx:id="conteudoArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #F0F2F5;" BorderPane.alignment="CENTER" />
+                              </center>
+                           </BorderPane>
+                     MainView.fxml
+                           <?xml version="1.0" encoding="UTF-8"?>
+                           
+                           <?import javafx.scene.control.*?>
+                           <?import javafx.scene.layout.*?>
+                           <?import javafx.geometry.Insets?>
+                           <?import java.lang.String?>
+                           
+                           <AnchorPane prefHeight="700.0" prefWidth="1150.0" stylesheets="@../estilos/estilo-moderno.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.financas.visao.MainController">
+                               <children>
+                                   <VBox spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <padding>
+                                           <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                                       </padding>
+                                       
+                                       <children>
+                                           <TitledPane animated="false" collapsible="false" text="Dados da Nota / Cupom">
+                                               <content>
+                                                   <HBox spacing="20.0" alignment="CENTER_LEFT">
+                                                       <children>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Estabelecimento" />
+                                                               <ComboBox fx:id="comboEstabelecimento" prefWidth="250.0" promptText="Onde comprou?" />
+                                                           </VBox>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Data da Emissão" />
+                                                               <DatePicker fx:id="dpData" prefWidth="150.0" promptText="dd/mm/aaaa" />
+                                                           </VBox>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Pagamento" />
+                                                               <ComboBox fx:id="comboPagamento" prefWidth="180.0" promptText="Forma de pagamento" />
+                                                           </VBox>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Valor da Nota (Cupom)" />
+                                                               <TextField fx:id="txtValorNota" prefWidth="130.0" promptText="Ex: 150,00" />
+                                                           </VBox>
+                                                       </children>
+                                                   </HBox>
+                                               </content>
+                                           </TitledPane>
+                           
+                                           <TitledPane animated="false" collapsible="false" text="Lançar Produtos">
+                                               <content>
+                                                   <HBox spacing="10.0" alignment="BOTTOM_LEFT">
+                                                       <children>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Membro" />
+                                                               <ComboBox fx:id="comboMembroItem" prefWidth="120.0" promptText="Quem?" />
+                                                           </VBox>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Produto" />
+                                                               <ComboBox fx:id="comboProduto" prefWidth="250.0" promptText="O que comprou?" />
+                                                           </VBox>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Qtd" />
+                                                               <TextField fx:id="txtQuantidade" prefWidth="80.0" promptText="0.0" />
+                                                           </VBox>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Valor" />
+                                                               <TextField fx:id="txtValorUnitario" prefWidth="110.0" promptText="R$ 0,00" />
+                                                           </VBox>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Categoria" />
+                                                               <ComboBox fx:id="comboCategoria" disable="true" prefWidth="130.0" promptText="Automático" />
+                                                           </VBox>
+                                                           <VBox spacing="5.0">
+                                                               <Label text="Subcategoria" />
+                                                               <ComboBox fx:id="comboSubcategoria" disable="true" prefWidth="130.0" promptText="Automático" />
+                                                           </VBox>
+                                                           <Button fx:id="btnAdicionar" onAction="#adicionarItem" prefWidth="110.0" text="ADICIONAR">
+                                                               <styleClass>
+                                                                   <String fx:value="button" />
+                                                                   <String fx:value="button-sucesso" />
+                                                               </styleClass>
+                                                           </Button>
+                                                       </children>
+                                                   </HBox>
+                                               </content>
+                                           </TitledPane>
+                           
+                                           <TableView fx:id="tabelaItens" prefHeight="300.0" prefWidth="1060.0" VBox.vgrow="ALWAYS">
+                                               <columns>
+                                                   <TableColumn fx:id="colMembro" prefWidth="120.0" text="Membro" />
+                                                   <TableColumn fx:id="colProduto" prefWidth="580.0" text="Produto" />
+                                                   <TableColumn fx:id="colQuantidade" prefWidth="60.0" text="Qtd">
+                                                       <styleClass><String fx:value="coluna-direita" /></styleClass>
+                                                   </TableColumn>
+                                                   <TableColumn fx:id="colValorUnitario" prefWidth="90.0" text="Valor">
+                                                       <styleClass><String fx:value="coluna-direita" /></styleClass>
+                                                   </TableColumn>
+                                                   <TableColumn fx:id="colAcoes" prefWidth="130.0" text="Ação" />
+                                               </columns>
+                                               <columnResizePolicy>
+                                                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                               </columnResizePolicy>
+                                           </TableView>
+                           
+                                           <HBox alignment="CENTER_RIGHT" spacing="40.0" styleClass="footer-section">
+                                               <children>
+                                                   <VBox alignment="CENTER_RIGHT">
+                                                       <children>
+                                                           <Label text="SOMA DOS ITENS NO CARRINHO" styleClass="label-total-prefixo" />
+                                                           <Label fx:id="lblTotalCompra" text="R$ 0,00" styleClass="label-total-valor" />
+                                                       </children>
+                                                   </VBox>
+                                                   <Button fx:id="btnSalvarCompra" onAction="#salvarCompra" prefWidth="250.0" text="FINALIZAR COMPRA">
+                                                       <styleClass>
+                                                           <String fx:value="button" />
+                                                           <String fx:value="button-primario" />
+                                                       </styleClass>
+                                                   </Button>
+                                               </children>
+                                           </HBox>
+                                       </children>
+                                   </VBox>
+                               </children>
+                           </AnchorPane>
+   tabelas_postgreSQL.txt
+         -- Table: public.categorias
+         
+         -- DROP TABLE IF EXISTS public.categorias;
+         
+         CREATE TABLE IF NOT EXISTS public.categorias
+         (
+             id_categoria integer NOT NULL DEFAULT nextval('categorias_id_categoria_seq'::regclass),
+             nome character varying(50) COLLATE pg_catalog."default" NOT NULL,
+             CONSTRAINT categorias_pkey PRIMARY KEY (id_categoria),
+             CONSTRAINT categorias_nome_key UNIQUE (nome)
+         )
+         
+         TABLESPACE pg_default;
+         
+         ALTER TABLE IF EXISTS public.categorias
+             OWNER to postgres;
+         
+         ==================================================================================================
+         
+         -- Table: public.subcategorias
+         
+         -- DROP TABLE IF EXISTS public.subcategorias;
+         
+         CREATE TABLE IF NOT EXISTS public.subcategorias
+         (
+             id_subcategoria integer NOT NULL DEFAULT nextval('subcategorias_id_subcategoria_seq'::regclass),
+             id_categoria integer NOT NULL,
+             nome character varying(50) COLLATE pg_catalog."default" NOT NULL,
+             CONSTRAINT subcategorias_pkey PRIMARY KEY (id_subcategoria),
+             CONSTRAINT subcategorias_nome_categoria_unique UNIQUE (id_categoria, nome),
+             CONSTRAINT subcategorias_id_categoria_fkey FOREIGN KEY (id_categoria)
+                 REFERENCES public.categorias (id_categoria) MATCH SIMPLE
+                 ON UPDATE NO ACTION
+                 ON DELETE CASCADE
+         )
+         
+         TABLESPACE pg_default;
+         
+         ALTER TABLE IF EXISTS public.subcategorias
+             OWNER to postgres;
+         
+         ==================================================================================================
+         
+         -- Table: public.produtos
+         
+         -- DROP TABLE IF EXISTS public.produtos;
+         
+         CREATE TABLE IF NOT EXISTS public.produtos
+         (
+             id_produto integer NOT NULL DEFAULT nextval('produtos_id_produto_seq'::regclass),
+             id_subcategoria integer NOT NULL,
+             nome character varying(100) COLLATE pg_catalog."default" NOT NULL,
+             unidade_medida character varying(10) COLLATE pg_catalog."default",
+             CONSTRAINT produtos_pkey PRIMARY KEY (id_produto),
+             CONSTRAINT produtos_nome_sub_unique UNIQUE (id_subcategoria, nome),
+             CONSTRAINT produtos_id_subcategoria_fkey FOREIGN KEY (id_subcategoria)
+                 REFERENCES public.subcategorias (id_subcategoria) MATCH SIMPLE
+                 ON UPDATE NO ACTION
+                 ON DELETE CASCADE
+         )
+         
+         TABLESPACE pg_default;
+         
+         ALTER TABLE IF EXISTS public.produtos
+             OWNER to postgres;
+         
+         ==================================================================================================
+         
+         -- Table: public.transacoes_detalhe
+         
+         -- DROP TABLE IF EXISTS public.transacoes_detalhe;
+         
+         CREATE TABLE IF NOT EXISTS public.transacoes_detalhe
+         (
+             id_transacao integer NOT NULL DEFAULT nextval('transacoes_detalhe_id_transacao_seq'::regclass),
+             id_compra integer,
+             id_membro integer,
+             id_mes_ref integer,
+             valor_parcela numeric(10,2) NOT NULL,
+             numero_parcela integer NOT NULL,
+             descricao_formatada character varying(150) COLLATE pg_catalog."default",
+             id_produto integer,
+             quantidade numeric(10,3) NOT NULL DEFAULT 1,
+             valor_unitario numeric(10,2) NOT NULL DEFAULT 0.00,
+             CONSTRAINT transacoes_detalhe_pkey PRIMARY KEY (id_transacao),
+             CONSTRAINT transacoes_detalhe_id_compra_fkey FOREIGN KEY (id_compra)
+                 REFERENCES public.compras_mestre (id_compra) MATCH SIMPLE
+                 ON UPDATE NO ACTION
+                 ON DELETE CASCADE,
+             CONSTRAINT transacoes_detalhe_id_membro_fkey FOREIGN KEY (id_membro)
+                 REFERENCES public.membros (id_membro) MATCH SIMPLE
+                 ON UPDATE NO ACTION
+                 ON DELETE NO ACTION,
+             CONSTRAINT transacoes_detalhe_id_mes_ref_fkey FOREIGN KEY (id_mes_ref)
+                 REFERENCES public.meses_referencia (id_mes) MATCH SIMPLE
+                 ON UPDATE NO ACTION
+                 ON DELETE NO ACTION,
+             CONSTRAINT transacoes_detalhe_id_produto_fkey FOREIGN KEY (id_produto)
+                 REFERENCES public.produtos (id_produto) MATCH SIMPLE
+                 ON UPDATE NO ACTION
+                 ON DELETE NO ACTION
+         )
+         
+         TABLESPACE pg_default;
+         
+         ALTER TABLE IF EXISTS public.transacoes_detalhe
+             OWNER to postgres;
+         =================================================================================
+         
+         -- Table: public.meses_referencia
+         
+         -- DROP TABLE IF EXISTS public.meses_referencia;
+         
+         CREATE TABLE IF NOT EXISTS public.meses_referencia
+         (
+             id_mes integer NOT NULL DEFAULT nextval('meses_referencia_id_mes_seq'::regclass),
+             nome_exibicao character varying(20) COLLATE pg_catalog."default" NOT NULL,
+             data_inicio date NOT NULL,
+             CONSTRAINT meses_referencia_pkey PRIMARY KEY (id_mes)
+         )
+         
+         TABLESPACE pg_default;
+         
+         ALTER TABLE IF EXISTS public.meses_referencia
+             OWNER to postgres;
+         
+         ======================================================================================
+         
+         -- Table: public.membros
+         
+         -- DROP TABLE IF EXISTS public.membros;
+         
+         CREATE TABLE IF NOT EXISTS public.membros
+         (
+             id_membro integer NOT NULL DEFAULT nextval('membros_id_membro_seq'::regclass),
+             nome character varying(50) COLLATE pg_catalog."default" NOT NULL,
+             CONSTRAINT membros_pkey PRIMARY KEY (id_membro)
+         )
+         
+         TABLESPACE pg_default;
+         
+         ALTER TABLE IF EXISTS public.membros
+             OWNER to postgres;
+         
+         =====================================================================================
+         
+         -- Table: public.estabelecimentos
+         
+         -- DROP TABLE IF EXISTS public.estabelecimentos;
+         
+         CREATE TABLE IF NOT EXISTS public.estabelecimentos
+         (
+             id_estabelecimento integer NOT NULL DEFAULT nextval('estabelecimentos_id_estabelecimento_seq'::regclass),
+             nome character varying(100) COLLATE pg_catalog."default" NOT NULL,
+             CONSTRAINT estabelecimentos_pkey PRIMARY KEY (id_estabelecimento),
+             CONSTRAINT estabelecimentos_nome_key UNIQUE (nome)
+         )
+         
+         TABLESPACE pg_default;
+         
+         ALTER TABLE IF EXISTS public.estabelecimentos
+             OWNER to postgres;
+         
+         ====================================================================================
+         
+         -- Table: public.compras_mestre
+         
+         -- DROP TABLE IF EXISTS public.compras_mestre;
+         
+         CREATE TABLE IF NOT EXISTS public.compras_mestre
+         (
+             id_compra integer NOT NULL DEFAULT nextval('compras_mestre_id_compra_seq'::regclass),
+             id_estabelecimento integer,
+             valor_total numeric(10,2) NOT NULL,
+             data_emissao date DEFAULT CURRENT_DATE,
+             qtd_parcelas integer DEFAULT 1,
+             forma_pagamento character varying(30) COLLATE pg_catalog."default",
+             CONSTRAINT compras_mestre_pkey PRIMARY KEY (id_compra),
+             CONSTRAINT compras_mestre_id_estabelecimento_fkey FOREIGN KEY (id_estabelecimento)
+                 REFERENCES public.estabelecimentos (id_estabelecimento) MATCH SIMPLE
+                 ON UPDATE NO ACTION
+                 ON DELETE NO ACTION
+         )
+         
+         TABLESPACE pg_default;
+         
+         ALTER TABLE IF EXISTS public.compras_mestre
+             OWNER to postgres;

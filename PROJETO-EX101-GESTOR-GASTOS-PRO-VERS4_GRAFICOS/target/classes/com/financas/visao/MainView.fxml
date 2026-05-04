@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import java.lang.String?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1150.0" stylesheets="@../estilos/estilo-moderno.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.financas.visao.MainController">
+    <children>
+        <VBox spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+            </padding>
+            
+            <children>
+                <TitledPane animated="false" collapsible="false" text="Dados da Nota / Cupom">
+                    <content>
+                        <HBox spacing="20.0" alignment="CENTER_LEFT">
+                            <children>
+                                <VBox spacing="5.0">
+                                    <Label text="Estabelecimento" />
+                                    <ComboBox fx:id="comboEstabelecimento" prefWidth="250.0" promptText="Onde comprou?" />
+                                </VBox>
+                                <VBox spacing="5.0">
+                                    <Label text="Data da Emissão" />
+                                    <DatePicker fx:id="dpData" prefWidth="150.0" promptText="dd/mm/aaaa" />
+                                </VBox>
+                                <VBox spacing="5.0">
+                                    <Label text="Pagamento" />
+                                    <ComboBox fx:id="comboPagamento" prefWidth="180.0" promptText="Forma de pagamento" />
+                                </VBox>
+                                <VBox spacing="5.0">
+                                    <Label text="Valor da Nota (Cupom)" />
+                                    <TextField fx:id="txtValorNota" prefWidth="130.0" promptText="Ex: 150,00" />
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </content>
+                </TitledPane>
+
+                <TitledPane animated="false" collapsible="false" text="Lançar Produtos">
+                    <content>
+                        <HBox spacing="10.0" alignment="BOTTOM_LEFT">
+                            <children>
+                                <VBox spacing="5.0">
+                                    <Label text="Membro" />
+                                    <ComboBox fx:id="comboMembroItem" prefWidth="120.0" promptText="Quem?" />
+                                </VBox>
+                                <VBox spacing="5.0">
+                                    <Label text="Produto" />
+                                    <ComboBox fx:id="comboProduto" prefWidth="250.0" promptText="O que comprou?" />
+                                </VBox>
+                                <VBox spacing="5.0">
+                                    <Label text="Qtd" />
+                                    <TextField fx:id="txtQuantidade" prefWidth="80.0" promptText="0.0" />
+                                </VBox>
+                                <VBox spacing="5.0">
+                                    <Label text="Valor" />
+                                    <TextField fx:id="txtValorUnitario" prefWidth="110.0" promptText="R$ 0,00" />
+                                </VBox>
+                                <VBox spacing="5.0">
+                                    <Label text="Categoria" />
+                                    <ComboBox fx:id="comboCategoria" disable="true" prefWidth="130.0" promptText="Automático" />
+                                </VBox>
+                                <VBox spacing="5.0">
+                                    <Label text="Subcategoria" />
+                                    <ComboBox fx:id="comboSubcategoria" disable="true" prefWidth="130.0" promptText="Automático" />
+                                </VBox>
+                                <Button fx:id="btnAdicionar" onAction="#adicionarItem" prefWidth="110.0" text="ADICIONAR">
+                                    <styleClass>
+                                        <String fx:value="button" />
+                                        <String fx:value="button-sucesso" />
+                                    </styleClass>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </content>
+                </TitledPane>
+
+                <TableView fx:id="tabelaItens" prefHeight="300.0" prefWidth="1060.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colMembro" prefWidth="120.0" text="Membro" />
+                        <TableColumn fx:id="colProduto" prefWidth="580.0" text="Produto" />
+                        <TableColumn fx:id="colQuantidade" prefWidth="60.0" text="Qtd">
+                            <styleClass><String fx:value="coluna-direita" /></styleClass>
+                        </TableColumn>
+                        <TableColumn fx:id="colValorUnitario" prefWidth="90.0" text="Valor">
+                            <styleClass><String fx:value="coluna-direita" /></styleClass>
+                        </TableColumn>
+                        <TableColumn fx:id="colAcoes" prefWidth="130.0" text="Ação" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+
+                <HBox alignment="CENTER_RIGHT" spacing="40.0" styleClass="footer-section">
+                    <children>
+                        <VBox alignment="CENTER_RIGHT">
+                            <children>
+                                <Label text="SOMA DOS ITENS NO CARRINHO" styleClass="label-total-prefixo" />
+                                <Label fx:id="lblTotalCompra" text="R$ 0,00" styleClass="label-total-valor" />
+                            </children>
+                        </VBox>
+                        <Button fx:id="btnSalvarCompra" onAction="#salvarCompra" prefWidth="250.0" text="FINALIZAR COMPRA">
+                            <styleClass>
+                                <String fx:value="button" />
+                                <String fx:value="button-primario" />
+                            </styleClass>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

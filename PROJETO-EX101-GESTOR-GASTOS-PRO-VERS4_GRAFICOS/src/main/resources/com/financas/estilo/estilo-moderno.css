@@ -1,0 +1,228 @@
+/* =============================================================================
+   1. CORE & TIPOGRAFIA (Base do Sistema)
+   ============================================================================= */
+.root {
+    -fx-background-color: #F0F2F5;
+    -fx-font-family: "Segoe UI", Segoe, Tahoma, Helvetica, Arial, sans-serif;
+}
+
+.label {
+    -fx-text-fill: #2C3E50;
+    -fx-font-size: 11pt;
+}
+
+/* =============================================================================
+   2. PAINÉIS E CONTENTORES (Layout)
+   ============================================================================= */
+.titled-pane {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);
+}
+
+.titled-pane > .title {
+    -fx-background-color: #34495E;
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-padding: 12px;
+}
+
+.titled-pane > .title > .text {
+    -fx-font-weight: bold;
+    -fx-font-size: 12pt;
+}
+
+.titled-pane > .content {
+    -fx-background-color: white;
+    -fx-border-color: #EAECEE;
+    -fx-border-width: 0 1 1 1;
+    -fx-background-radius: 0 0 8px 8px;
+    -fx-padding: 15px;
+}
+
+.titled-pane .content .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #5D6D7E;
+    -fx-font-size: 10pt;
+}
+
+.footer-section {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #3498DB;
+    -fx-border-width: 2 0 0 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 0, -5, 0, 0);
+}
+
+/* =============================================================================
+   3. INPUTS E FORMULÁRIOS (Interação)
+   ============================================================================= */
+/* Padronização de altura e bordas */
+.combo-box, .date-picker, .text-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D5DBDB;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 5px;
+    -fx-pref-height: 35px;
+    -fx-min-height: 35px;
+    -fx-max-height: 35px;
+}
+
+.combo-box:focused, .date-picker:focused, .text-field:focused {
+    -fx-border-color: #3498DB;
+    -fx-border-width: 1.5px;
+}
+
+/* --- CORREÇÃO DO DATE-PICKER (Retângulo Duplo) --- */
+.date-picker > .arrow-button {
+    -fx-background-color: transparent !important;
+    -fx-background-insets: 0 !important;
+    -fx-background-radius: 0 4px 4px 0 !important;
+    -fx-border-width: 0 !important;
+    -fx-padding: 0 10 0 5 !important;
+}
+
+.date-picker > .arrow-button:focused {
+    -fx-background-color: transparent !important;
+}
+
+.date-picker > .text-field {
+    -fx-background-background-insets: 0 !important;
+    -fx-background-color: transparent !important;
+    -fx-border-width: 0 !important;
+}
+
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: #34495E !important;
+    -fx-padding: 5px !important;
+}
+
+/* =============================================================================
+   4. TABELAS (Visualização de Dados)
+   ============================================================================= */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #EAECEE;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);
+}
+
+.table-view .column-header {
+    -fx-background-color: #F8F9FA;
+    -fx-border-color: #EAECEE;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 10px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #34495E;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+.table-row-cell {
+    -fx-cell-size: 40px; 
+    -fx-border-color: transparent transparent #F2F3F4 transparent;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #fcfcfc;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #3498db;
+    -fx-background-insets: 0;
+}
+
+.table-cell {
+    -fx-padding: 0 5 0 5;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* =============================================================================
+   5. BOTÕES E COMPONENTES DE ACÇÃO
+   ============================================================================= */
+.button {
+    -fx-cursor: hand;
+    -fx-background-radius: 8px;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-pref-height: 35px;
+}
+
+/* Botões de fluxo principal */
+.button-sucesso { -fx-background-color: #27AE60; }
+.button-sucesso:hover { -fx-background-color: #2ECC71; }
+
+.button-primario {
+    -fx-background-color: #2980B9;
+    -fx-font-size: 15px;
+    -fx-pref-height: 60px;
+}
+
+/* Botão específico da tabela */
+.botao-excluir-tabela {
+    -fx-background-color: #ff7675;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-padding: 0 10 0 10;
+    -fx-font-size: 10px;
+    -fx-min-width: 100px; 
+    -fx-min-height: 25px;
+    -fx-max-height: 25px;
+    -fx-cursor: hand;
+}
+
+.botao-excluir-tabela:hover {
+    -fx-background-color: #d63031;
+}
+
+/* =============================================================================
+   6. UTILITÁRIOS (Classes Auxiliares)
+   ============================================================================= */
+.label-total-prefixo {
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #95A5A6;
+}
+
+.label-total-valor {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+}
+
+.coluna-direita {
+    -fx-alignment: CENTER_RIGHT;
+    -fx-padding: 0 15 0 0;
+}
+
+.coluna-centralizada {
+    -fx-alignment: CENTER;
+    -fx-padding: 0;
+}
+
+/* =============================================================================
+   7. MENU LATERAL (Navegação)
+   ============================================================================= */
+.sidebar {
+    -fx-background-color: #2C3E50; /* Azul escuro combinando com seus TitledPanes */
+    -fx-padding: 20px;
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ECF0F1;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 14px;
+    -fx-border-color: #34495E;
+    -fx-border-width: 0 0 1 0; /* Linha sutil abaixo do botão */
+}
+
+.menu-button:hover {
+    -fx-background-color: #34495E;
+    -fx-text-fill: white;
+}

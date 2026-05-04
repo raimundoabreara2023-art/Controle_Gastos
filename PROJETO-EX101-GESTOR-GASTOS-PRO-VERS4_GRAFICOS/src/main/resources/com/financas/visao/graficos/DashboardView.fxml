@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fitToWidth="true" pannable="true" style="-fx-background-color: transparent;" 
+            stylesheets="@../../estilo/estilo-graficos.css" 
+            xmlns="http://javafx.com/javafx/17" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.financas.visao.graficos.DashboardController">
+   
+   <content>
+      <VBox spacing="30.0" style="-fx-background-color: #F0F2F5;">
+         <children>
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Análise Financeira" textFill="#2c3e50">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label text="Resumo detalhado dos gastos da família" textFill="#7f8c8d">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </VBox>
+
+            <VBox fx:id="containerGraficoPizza" alignment="CENTER" minHeight="450.0" 
+                  styleClass="card-grafico" />
+
+            <VBox fx:id="containerGraficoBarras" alignment="CENTER" minHeight="450.0" 
+                  styleClass="card-grafico" />
+
+            <VBox spacing="10.0" styleClass="card-grafico">
+               <children>
+                  <Label text="Histórico de Itens Lançados" textFill="#2c3e50">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="tabelaHistorico" minHeight="400.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="colProduto" prefWidth="200.0" text="Produto" />
+                      <TableColumn fx:id="colMembro" prefWidth="150.0" text="Membro" />
+                      <TableColumn fx:id="colQuantidade" prefWidth="100.0" text="Qtd" />
+                      <TableColumn fx:id="colValor" prefWidth="120.0" text="Valor Total" />
+                    </columns>
+                  </TableView>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+            
+         </children>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+      </VBox>
+   </content>
+</ScrollPane>
